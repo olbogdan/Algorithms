@@ -2,8 +2,8 @@ import re
 
 
 def anagrams(str1, str2):
-    plainStr1 = re.sub("[\W]", "", str1)
-    plainStr2 = re.sub("[\W]", "", str2)
+    plainStr1 = re.sub("[\W]", "", str1).lower()
+    plainStr2 = re.sub("[\W]", "", str2).lower()
     if len(plainStr1) != len(plainStr2):
         return False
 
@@ -26,4 +26,4 @@ def anagrams(str1, str2):
             return False
     return True
 
-print(anagrams("a abx!", ",  babc"))
+print(anagrams("b aBx!", ",  babx"))
