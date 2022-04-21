@@ -1,5 +1,27 @@
 import re
 
+def anagrams3(str1, str2):
+    plainStr1 = ""
+    for i in str1.lower():
+        if ord(i) in range(ord('a'), ord('z') + 1):
+            plainStr1 += i
+    plainStr2 = ""
+    for i in str2.lower():
+        if "a" <= i <= "z":
+            plainStr2 += i
+
+    dict1 = {}
+    for i in plainStr1:
+        dict1[i] = dict1.get(i, 0) + 1
+
+    dict2 = {}
+    for i in plainStr2:
+        dict2[i] = dict2.get(i, 0) + 1
+
+    return dict1 == dict2
+
+print(anagrams3("b aBx!", ",  babx"))
+
 def anagrams2(str1, str2):
     plainStr1 = "".join(filter(lambda s: s.isalpha(), str1)).lower()
     plainStr2 = "".join(filter(lambda s: s.isalpha(), str2)).lower()
