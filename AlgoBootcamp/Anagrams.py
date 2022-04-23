@@ -1,5 +1,18 @@
 import re
 
+def anagrams4(str1, str2):
+    def isalpha(x):
+        return x.isalpha()
+    plainStr1 = "".join(filter(isalpha, str1)).lower()
+    plainStr2 = "".join(filter(isalpha, str2)).lower()
+    return sorted(plainStr1) == sorted(plainStr2)
+
+
+assert(anagrams4("b aBx!", ",  babx"))
+assert not (anagrams4("ab", "baa"))
+assert(anagrams4("näa   ba.. !", "ba -aä ,  n"))
+assert(anagrams4("aba   ", "baa!"))
+
 def anagrams3(str1, str2):
     plainStr1 = ""
     for i in str1.lower():
@@ -20,7 +33,13 @@ def anagrams3(str1, str2):
 
     return dict1 == dict2
 
+
 print(anagrams3("b aBx!", ",  babx"))
+assert(anagrams3("b aBx!", ",  babx"))
+assert not (anagrams3("ab", "baa"))
+assert(anagrams3("näa   ba.. !", "ba -aä ,  n"))
+assert(anagrams3("aba   ", "baa!"))
+
 
 def anagrams2(str1, str2):
     plainStr1 = "".join(filter(lambda s: s.isalpha(), str1)).lower()
@@ -36,7 +55,13 @@ def anagrams2(str1, str2):
 
     return dict1 == dict2
 
+
 print(anagrams2("b aBx!", ",  babx"))
+assert(anagrams2("b aBx!", ",  babx"))
+assert not (anagrams2("ab", "baa"))
+assert(anagrams2("näa   ba.. !", "ba -aä ,  n"))
+assert(anagrams2("aba   ", "baa!"))
+
 
 def anagrams(str1, str2):
     plainStr1 = re.sub("[\W]", "", str1).lower()
@@ -60,4 +85,9 @@ def anagrams(str1, str2):
 
     return dict1 == dict2
 
+
 print(anagrams("b aBx!", ",  babx"))
+assert(anagrams("b aBx!", ",  babx"))
+assert not (anagrams("ab", "baa"))
+assert(anagrams("näa   ba.. !", "ba -aä ,  n"))
+assert(anagrams("aba   ", "baa!"))
