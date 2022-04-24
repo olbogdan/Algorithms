@@ -15,3 +15,16 @@ def steps(n):
 
 
 steps(3)
+
+
+def steps2(n):
+    def rec(step):
+        if step < 0:
+            return
+
+        print("#" * (n-step) + " " * step)
+        rec(step-1)
+    rec(n-1)
+
+
+steps2(5)
