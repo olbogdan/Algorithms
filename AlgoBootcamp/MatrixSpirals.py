@@ -1,5 +1,3 @@
-import numpy as np
-
 def matrix(n):
     matrix = [[-1] * n for i in range(n)]
     count = 1
