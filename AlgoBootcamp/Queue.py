@@ -60,3 +60,20 @@ q2.add(3)
 result = weave(q1, q2)
 while result.peek() is not None:
     print(result.remove())
+
+
+class Stack:
+    def __init__(self):
+        self.stack = deque()
+
+    def push(self, value):
+        self.stack.append(value)
+
+    def pop(self):
+        return self.stack.pop()
+
+    def peek(self):
+        if self.stack:
+            return self.stack[-1]
+        else:
+            return None
