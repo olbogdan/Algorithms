@@ -1,6 +1,44 @@
 from collections import deque
 
+# Implement a Queue datastructure using two Stacks
+class QueueFromStack:
+    def __init__(self):
+        self.stack1 = Stack()
+        self.stack2 = Stack()
 
+    def add(self, value):
+        self.stack1.push(value)
+
+    def remove(self):
+        if self.stack2.peek() is None:
+            while self.stack1:
+                self.stack2.push(self.stack1.pop())
+        return self.stack2.pop()
+
+    def peek(self):
+        if self.stack2.peek() is None:
+            while self.stack1:
+                self.stack2.push(self.stack1.pop())
+        return self.stack2.peek()
+
+# Task: Implement a Stack using a deque
+class Stack:
+    def __init__(self):
+        self.stack = deque()
+
+    def push(self, value):
+        self.stack.append(value)
+
+    def pop(self):
+        return self.stack.pop()
+
+    def peek(self):
+        if self.stack:
+            return self.stack[-1]
+        else:
+            return None
+
+# Task: Implement a Queue using a deque
 class Queue:
     def __init__(self):
         self.queue = deque()
@@ -17,7 +55,7 @@ class Queue:
         else:
             return None
 
-
+# Task: Implement a Queue using an array
 class Queue2:
     def __init__(self):
         self.queue = []
@@ -35,7 +73,7 @@ class Queue2:
         else:
             return None
 
-
+# Task: Implement zipper of two Queues
 def weave(source_one: Queue, source_two: Queue):
     q = Queue()
     while source_one.peek() is not None or source_two.peek() is not None:
@@ -60,20 +98,3 @@ q2.add(3)
 result = weave(q1, q2)
 while result.peek() is not None:
     print(result.remove())
-
-
-class Stack:
-    def __init__(self):
-        self.stack = deque()
-
-    def push(self, value):
-        self.stack.append(value)
-
-    def pop(self):
-        return self.stack.pop()
-
-    def peek(self):
-        if self.stack:
-            return self.stack[-1]
-        else:
-            return None
