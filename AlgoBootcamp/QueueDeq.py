@@ -38,8 +38,9 @@ class Stack:
         else:
             return None
 
+
 # Task: Implement a Queue using a deque
-class Queue:
+class QueueDeq:
     def __init__(self):
         self.queue = deque()
 
@@ -54,6 +55,7 @@ class Queue:
             return self.queue[-1]
         else:
             return None
+
 
 # Task: Implement a Queue using an array
 class Queue2:
@@ -73,9 +75,10 @@ class Queue2:
         else:
             return None
 
+
 # Task: Implement zipper of two Queues
-def weave(source_one: Queue, source_two: Queue):
-    q = Queue()
+def weave(source_one: QueueDeq, source_two: QueueDeq):
+    q = QueueDeq()
     while source_one.peek() is not None or source_two.peek() is not None:
         if source_one.peek() is not None:
             q.add(source_one.remove())
@@ -84,14 +87,14 @@ def weave(source_one: Queue, source_two: Queue):
     return q
 
 
-q1 = Queue()
+q1 = QueueDeq()
 q1.add("a")
 q1.add("b")
 q1.add("c")
 q1.add("d")
 q1.add("e")
 q1.add("f")
-q2 = Queue()
+q2 = QueueDeq()
 q2.add(1)
 q2.add(2)
 q2.add(3)
