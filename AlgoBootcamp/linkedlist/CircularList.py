@@ -1,5 +1,5 @@
 # Given a linked list, return true if the list is circular, false if not
-from AlgoBootcamp.LinkedList import LinkedList
+from AlgoBootcamp.linkedlist.LinkedList import LinkedList
 
 # O(n) solution with O(1) memory,
 def circular1(list):
