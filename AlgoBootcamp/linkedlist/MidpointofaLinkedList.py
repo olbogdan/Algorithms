@@ -3,7 +3,7 @@
 
 
 # solutio1: two pointer manipulation, second pointer increments with double speed of a slow one until reaches None.
-from AlgoBootcamp.LinkedList import LinkedList
+from AlgoBootcamp.linkedlist.LinkedList import LinkedList
 
 
 def midpoint1(list):
