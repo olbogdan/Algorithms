@@ -21,6 +21,17 @@ class Tree:
                 #     queue.appendleft(node.children[-i])
             fn(node)
 
+    def traverse_df_2(self, fn):
+        if self.root is None:
+            return
+        queue = deque()
+        queue.append(self.root)
+        while queue:
+            node = queue.popleft()
+            if node.children is not None:
+                queue.extendleft(reversed(node.children))
+            fn(node)
+
 
 tree = Tree()
 assert tree.root is None
@@ -44,3 +55,4 @@ tree = Tree()
 tree.root = root
 
 tree.traverse_df(lambda node: print(node))
+tree.traverse_df_2(lambda node: print(node))
