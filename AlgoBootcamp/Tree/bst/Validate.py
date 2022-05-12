@@ -6,14 +6,12 @@ def validate(node, down_constrain = float("-inf"), top_constrain = float("inf"))
     elif node.left is None and node.right is None:
         return True
 
-    left_is_valid = True
-    if node.left:
-        left_is_valid = validate(node.left, down_constrain, node.data)
-    righ_is_valid = True
-    if node.right:
-        righ_is_valid = validate(node.right, node.data, top_constrain)
+    if node.left and not validate(node.left, down_constrain, node.data):
+        return False
+    if node.right and not validate(node.right, node.data, top_constrain):
+        return False
 
-    return left_is_valid and righ_is_valid
+    return True
 
 
 node = Node(10)
