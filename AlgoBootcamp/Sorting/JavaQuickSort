@@ -1,0 +1,48 @@
+class Solution {
+    public int[] sortArray(int[] nums) {
+        quicksort(nums, 0, nums.length - 1);
+        return nums;
+    }
+
+    private void quicksort(int[] elements, int left, int right) {
+        if (left >= right) return;
+
+        int pivotPos = partition(elements, left, right);
+        quicksort(elements, left, pivotPos - 1);
+        quicksort(elements, pivotPos + 1, right);
+    }
+
+    public int partition(int[] elements, int left, int right) {
+        int pivot = elements[right];
+
+        int i = left;
+        int j = right - 1;
+        while (i < j) {
+            while (elements[i] < pivot) {
+                i++;
+            }
+            while (j > left && elements[j] >= pivot) {
+                j--;
+            }
+            if (i < j) {
+                swap(elements, i, j);
+                i++;
+                j--;
+            }
+        }
+
+        if (i == j && elements[i] < pivot) {
+            i++;
+        }
+        if (elements[i] != pivot) {
+            swap(elements, i, right);
+        }
+        return i;
+    }
+
+    void swap(int[] arr, int x, int y) {
+  	    int temp = arr[x];
+  	    arr[x] = arr[y];
+  	    arr[y] = temp;
+    }
+}
