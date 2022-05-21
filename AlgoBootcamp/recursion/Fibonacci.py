@@ -7,6 +7,13 @@ def fib(n):
         memoize[n] = result
     return memoize[n]
 
+def fib2(n):
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return fib2(n-1) + fib2(n-2)
+
 
 print(fib(6))
 assert fib(3) == 2
