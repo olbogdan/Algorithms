@@ -1,4 +1,4 @@
-from AlgoBootcamp.Tree.bst.BinarySearchTree import Node
+from AlgoBootcamp.tree.bst.BinarySearchTree import Node
 
 def validate(node, down_constrain = float("-inf"), top_constrain = float("inf")):
     if node.data <= down_constrain or node.data >= top_constrain:
