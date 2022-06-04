@@ -1,6 +1,6 @@
 from collections import deque
 
-from AlgoBootcamp.Tree.Node import Node
+from AlgoBootcamp.tree.Node import Node
 
 
 class Tree:

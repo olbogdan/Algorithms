@@ -6,7 +6,7 @@
 # answer: [1, 3, 2]
 from collections import deque
 
-from AlgoBootcamp.Tree.Node import Node
+from AlgoBootcamp.tree.Node import Node
 
 
 def level_width(root):
