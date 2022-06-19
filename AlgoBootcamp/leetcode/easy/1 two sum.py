@@ -8,8 +8,7 @@ def twoSum(nums: List[int], target: int) -> List[int]:
         searchedNum = target - num
         if searchedNum in hashNums:
             index = hashNums[searchedNum]
-            if index != i:
-                return [i, index]
+            return [i, index]
         hashNums[nums[i]] = i
 
 twoSum([2,7,11,15], 9) == [0,1]
