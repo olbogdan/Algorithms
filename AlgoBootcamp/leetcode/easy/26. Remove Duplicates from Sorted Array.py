@@ -10,4 +10,6 @@ def removeDuplicates(nums: [int]) -> int:
     filteredSize += 1
     return filteredSize
 
-print(removeDuplicates([1,1,2,4,4]))
+assert removeDuplicates([1,1,2,4,4]) == 3
+assert removeDuplicates([1,1,2]) == 2
+assert removeDuplicates([1,1,1]) == 1
