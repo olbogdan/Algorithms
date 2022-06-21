@@ -3,7 +3,32 @@
 # Return the shortest such subarray and output its length.
 from collections import deque
 
-def findUnsortedSubarray(nums: [int]) -> int:
+def findUnsortedSubarrayLogN(nums: [int]) -> int:
+    if len(nums) == 0:
+        return 0
+
+    numsInOrder = nums.copy()
+    numsInOrder.sort()
+
+    left, right = 0, len(nums) - 1
+    while left < right:
+        if numsInOrder[left] == nums[left]:
+            left += 1
+        if numsInOrder[right] == nums[right]:
+            right -= 1
+        if numsInOrder[left] != nums[left] and numsInOrder[right] != nums[right]:
+            return right - left + 1
+    return 0
+
+assert findUnsortedSubarrayLogN([2, 3, 4]) == 0
+assert findUnsortedSubarrayLogN([5, 2, 3, 4]) == 4
+assert findUnsortedSubarrayLogN([2, 6, 4, 8, 10, 9, 15]) == 5
+assert findUnsortedSubarrayLogN([1, 1, 1, 1, 1, 1, 1]) == 0
+assert findUnsortedSubarrayLogN([1, 3, 1, 1, 1, 1, 1]) == 6
+assert findUnsortedSubarrayLogN([3, 2, 3, 2, 4]) == 4
+assert findUnsortedSubarrayLogN([2, 6, 4, 8, 10, 9, 15]) == 5
+
+def findUnsortedSubarrayLinearTime(nums: [int]) -> int:
     increasing = deque()
     decreasing = deque()
 
@@ -38,10 +63,10 @@ def findUnsortedSubarray(nums: [int]) -> int:
     res = len(nums) - len(increasing) - len(decreasing)
     return res
 
-assert findUnsortedSubarray([2,3,4]) == 0
-assert findUnsortedSubarray([5,2,3,4]) == 4
-assert findUnsortedSubarray([2,6,4,8,10,9,15]) == 5
-assert findUnsortedSubarray([1,1,1,1,1,1,1]) == 0
-assert findUnsortedSubarray([1,3,1,1,1,1,1]) == 6
-assert findUnsortedSubarray([3,2,3,2,4]) == 4
-assert findUnsortedSubarray([2,6,4,8,10,9,15]) == 5
+assert findUnsortedSubarrayLinearTime([2, 3, 4]) == 0
+assert findUnsortedSubarrayLinearTime([5, 2, 3, 4]) == 4
+assert findUnsortedSubarrayLinearTime([2, 6, 4, 8, 10, 9, 15]) == 5
+assert findUnsortedSubarrayLinearTime([1, 1, 1, 1, 1, 1, 1]) == 0
+assert findUnsortedSubarrayLinearTime([1, 3, 1, 1, 1, 1, 1]) == 6
+assert findUnsortedSubarrayLinearTime([3, 2, 3, 2, 4]) == 4
+assert findUnsortedSubarrayLinearTime([2, 6, 4, 8, 10, 9, 15]) == 5
