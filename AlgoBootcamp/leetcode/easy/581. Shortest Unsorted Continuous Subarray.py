@@ -3,6 +3,39 @@
 # Return the shortest such subarray and output its length.
 from collections import deque
 
+def findUnsortedSubarrayON(nums: [int]) -> int:
+    # [1, 3l, 2r, 5]
+    # n<lmax use as lindex
+    # n > rmin use as rindex
+    # r-l+1
+    r = 0
+    rMax = nums[0]
+    for i in range(1, len(nums)):
+        if nums[i] >= rMax:
+            rMax = nums[i]
+        else:
+            r = i
+    l = 0
+    lMin = nums[-1]
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] <= lMin:
+            lMin = nums[i]
+        else:
+            l = i
+    if l == r:
+        return 0
+
+    return r - l + 1
+
+assert findUnsortedSubarrayON([1, 2, 3, 4]) == 0
+assert findUnsortedSubarrayON([2, 3, 4]) == 0
+assert findUnsortedSubarrayON([5, 2, 3, 4]) == 4
+assert findUnsortedSubarrayON([2, 6, 4, 8, 10, 9, 15]) == 5
+assert findUnsortedSubarrayON([1, 1, 1, 1, 1, 1, 1]) == 0
+assert findUnsortedSubarrayON([1, 3, 1, 1, 1, 1, 1]) == 6
+assert findUnsortedSubarrayON([3, 2, 3, 2, 4]) == 4
+assert findUnsortedSubarrayON([2, 6, 4, 8, 10, 9, 15]) == 5
+
 def findUnsortedSubarrayLogN(nums: [int]) -> int:
     if len(nums) == 0:
         return 0
