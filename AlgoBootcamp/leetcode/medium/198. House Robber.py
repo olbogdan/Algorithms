@@ -13,7 +13,7 @@ def rob(nums) -> int:
         if i in memo:
             return memo[i]
 
-        val = max(nums[i] + dp( i +2), dp( i +1))
+        val = max(nums[i] + dp(i +2), dp(i +1))
         memo[i] = val
         return val
 
