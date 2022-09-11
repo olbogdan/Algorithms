@@ -13,26 +13,16 @@
 
 def characterReplacement(s: str, k: int) -> int:
     left = 0
-    right = 0
     result = 0
     charCount = {}
 
-    def maxFrequent():
-        maxFr = 0
-        for ch, fr in charCount.items():
-            maxFr = max(maxFr, fr)
-        return maxFr
-
-    # abc 1
-    while right < len(s):
-        charCount[s[right]] = charCount.get(s[right], 0) + 1
-        if right - left - k < maxFrequent():
-            result = max(result, right - left + 1)
-        else:
-            while right - left - k >= maxFrequent():
-                charCount[s[left]] = charCount[s[left]] - 1
-                left += 1
-        right += 1
+    for r in range(len(s)):
+        charCount[s[r]] = charCount.get(s[r], 0) + 1
+        maxFr = max(charCount.values())
+        if r - left + 1 - maxFr > k:
+            charCount[s[left]] = charCount[s[left]] - 1
+            left += 1
+        result = max(result, r - left + 1)
 
     return result
 
