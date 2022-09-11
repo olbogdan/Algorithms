@@ -10,8 +10,30 @@
 # Explanation: Replace the one 'A' in the middle with 'B' and form "AABBBBA".
 # The substring "BBBB" has the longest repeating letters, which is 4.
 
-
 def characterReplacement(s: str, k: int) -> int:
+    left = 0
+    result = 0
+    charCount = {}
+
+    maxFr = 0
+    for r in range(len(s)):
+        charCount[s[r]] = charCount.get(s[r], 0) + 1
+        maxFr = max(maxFr, charCount[s[r]])
+        if r - left + 1 - maxFr > k:
+            charCount[s[left]] = charCount[s[left]] - 1
+            left += 1
+        result = max(result, r - left + 1)
+
+    return result
+
+
+assert characterReplacement("ABBB", 2) == 4
+assert characterReplacement("ABAB", 2) == 4
+assert characterReplacement("AABABBA", 1) == 4
+assert characterReplacement("AABABBA", 0) == 2
+assert characterReplacement("AAAAAAB", 1) == 7
+
+def characterReplacement1(s: str, k: int) -> int:
     left = 0
     result = 0
     charCount = {}
@@ -27,9 +49,9 @@ def characterReplacement(s: str, k: int) -> int:
     return result
 
 
-assert characterReplacement("ABBB", 2) == 4
-assert characterReplacement("ABAB", 2) == 4
-assert characterReplacement("AABABBA", 1) == 4
-assert characterReplacement("AABABBA", 0) == 2
-assert characterReplacement("AAAAAAB", 1) == 7
+assert characterReplacement1("ABBB", 2) == 4
+assert characterReplacement1("ABAB", 2) == 4
+assert characterReplacement1("AABABBA", 1) == 4
+assert characterReplacement1("AABABBA", 0) == 2
+assert characterReplacement1("AAAAAAB", 1) == 7
 
