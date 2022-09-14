@@ -23,6 +23,10 @@ def invertTree(root: TreeNode) -> TreeNode:
 
 tr1 = TreeNode(11, None, None)
 tr2 = TreeNode(12, None, None)
-TreeNode(12, tr1, tr2)
+tr3 = TreeNode(42, None, None)
+tr2.right = tr3
+TreeNode(42, tr1, tr2)
 result = invertTree(TreeNode(12, tr1, tr2))
 assert result.left.val == 12
+assert result.right.val == 11
+assert result.left.left.val == 42
