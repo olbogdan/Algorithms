@@ -53,3 +53,44 @@ l1 = TreeNode(1, TreeNode(3))
 r1 = TreeNode(1)
 p = TreeNode(3, l1, None)
 assert isSubtree(p, r1) == False
+
+
+def isSubtreeRecursive(root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+    if not subRoot:
+        return True
+    if not root:
+        return False
+
+    def isEquals(tree1, tree2):
+        if not tree1 and not tree2:
+            return True
+        elif not tree1 or not tree2:
+            return False
+        return tree1.val == tree2.val and isEquals(tree1.left, tree2.left) and isEquals(tree1.right, tree2.right)
+
+    if isEquals(root, subRoot):
+        return True
+    return (isSubtree(root.left, subRoot) or isSubtree(root.right, subRoot))
+
+
+l1 = TreeNode(1)
+r1 = TreeNode(2)
+p = TreeNode(3, l1, r1)
+q = TreeNode(3, l1, r1)
+assert isSubtree(p, q) == True
+
+l1 = TreeNode(1)
+r1 = TreeNode(2)
+p = TreeNode(3, l1, r1)
+p2level = TreeNode(10, None, p)
+q = TreeNode(3, l1, r1)
+assert isSubtreeRecursive(p2level, q) == True
+
+l1 = TreeNode(1)
+p = TreeNode(3, l1, None)
+assert isSubtreeRecursive(p, l1) == True
+
+l1 = TreeNode(1, TreeNode(3))
+r1 = TreeNode(1)
+p = TreeNode(3, l1, None)
+assert isSubtreeRecursive(p, r1) == False
