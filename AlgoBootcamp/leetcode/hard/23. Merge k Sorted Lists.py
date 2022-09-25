@@ -12,6 +12,7 @@
 # merging them into one sorted list:
 # 1->1->2->3->4->4->5->6
 from collections import Counter
+from heapq import heappush, heappop
 from typing import Optional, List
 
 
@@ -41,6 +42,28 @@ def mergeKLists(lists: List[Optional[ListNode]]) -> Optional[ListNode]:
 list1 = ListNode(5, ListNode(10, ListNode(20)))
 list2 = ListNode(1, ListNode(30, ListNode(40)))
 result = mergeKLists([list1, list2])
+assert result.val == 1
+assert result.next.val == 5
+assert result.next.next.val == 10
+assert result.next.next.next.val == 20
+assert result.next.next.next.next.val == 30
+assert result.next.next.next.next.next.val == 40
+
+def mergeKListsHeap(lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+    heap = []
+    for list in lists:
+        while list:
+            heappush(heap, list.val)
+            list = list.next
+    dummy = tail = ListNode()
+    while heap:
+        tail.next = ListNode(heappop(heap))
+        tail = tail.next
+    return dummy.next
+
+list1 = ListNode(5, ListNode(10, ListNode(20)))
+list2 = ListNode(1, ListNode(30, ListNode(40)))
+result = mergeKListsHeap([list1, list2])
 assert result.val == 1
 assert result.next.val == 5
 assert result.next.next.val == 10
