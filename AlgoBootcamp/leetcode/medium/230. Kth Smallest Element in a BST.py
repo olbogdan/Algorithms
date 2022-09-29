@@ -8,6 +8,7 @@
 # The number of nodes in the tree is n.
 # 1 <= k <= n <= 104
 # 0 <= Node.val <= 104
+from collections import deque
 from typing import Optional
 
 
@@ -55,3 +56,22 @@ def kthSmallest2(root: Optional[TreeNode], k: int) -> int:
 assert kthSmallest2(TreeNode(2, TreeNode(1), TreeNode(3)), 1) == 1
 assert kthSmallest2(TreeNode(2, TreeNode(1), TreeNode(3)), 2) == 2
 assert kthSmallest2(TreeNode(2, TreeNode(1), TreeNode(3)), 3) == 3
+
+
+def kthSmallestIterative(root: Optional[TreeNode], k: int) -> int:
+    stack = deque()
+    curr = root
+    while curr or stack:
+        while curr:
+            stack.append(curr)
+            curr = curr.left
+        curr = stack.pop()
+        k -= 1
+        if k == 0:
+            return curr.val
+        curr = curr.right
+
+
+assert kthSmallestIterative(TreeNode(2, TreeNode(1), TreeNode(3)), 1) == 1
+assert kthSmallestIterative(TreeNode(2, TreeNode(1), TreeNode(3)), 2) == 2
+assert kthSmallestIterative(TreeNode(2, TreeNode(1), TreeNode(3)), 3) == 3
