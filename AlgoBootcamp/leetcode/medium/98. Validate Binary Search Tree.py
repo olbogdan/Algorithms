@@ -23,4 +23,5 @@ def isValidBST(root: Optional[TreeNode]) -> bool:
     return isValid(root, float(-inf), float(inf))
 
 
-print(isValidBST(TreeNode(2, TreeNode(2), TreeNode(2))))
+assert isValidBST(TreeNode(2, TreeNode(2), TreeNode(2))) is False
+assert isValidBST(TreeNode(2, TreeNode(1), TreeNode(3))) is True
