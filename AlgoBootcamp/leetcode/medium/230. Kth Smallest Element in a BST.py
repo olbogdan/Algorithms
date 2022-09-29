@@ -17,6 +17,8 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
+
 def kthSmallest(root: Optional[TreeNode], k: int) -> int:
     array = []
     def dfs(root):
@@ -32,3 +34,24 @@ def kthSmallest(root: Optional[TreeNode], k: int) -> int:
 assert kthSmallest(TreeNode(2, TreeNode(1), TreeNode(3)), 1) == 1
 assert kthSmallest(TreeNode(2, TreeNode(1), TreeNode(3)), 2) == 2
 assert kthSmallest(TreeNode(2, TreeNode(1), TreeNode(3)), 3) == 3
+
+
+def kthSmallest2(root: Optional[TreeNode], k: int) -> int:
+    res = 0
+    def dfs(root):
+        nonlocal k
+        nonlocal res
+        if not root or k == 0:
+            return
+        dfs(root.left)
+        k -= 1
+        if k == 0:
+            res = root.val
+        dfs(root.right)
+    dfs(root)
+    return res
+
+
+assert kthSmallest2(TreeNode(2, TreeNode(1), TreeNode(3)), 1) == 1
+assert kthSmallest2(TreeNode(2, TreeNode(1), TreeNode(3)), 2) == 2
+assert kthSmallest2(TreeNode(2, TreeNode(1), TreeNode(3)), 3) == 3
