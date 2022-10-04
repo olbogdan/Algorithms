@@ -29,7 +29,50 @@
 # word and prefix consist only of lowercase English letters.
 # At most 3 * 104 calls in total will be made to insert, search, and startsWith.
 
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.endOfWord = False
+
+
 class Trie:
+
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        cur = self.root
+        for s in word:
+            if s not in cur.children:
+                cur.children[s] = TrieNode()
+            cur = cur.children[s]
+        cur.endOfWord = True
+
+    def search(self, word: str) -> bool:
+        cur = self.root
+        for s in word:
+            if s not in cur.children:
+                return False
+            cur = cur.children[s]
+        return cur.endOfWord
+
+    def startsWith(self, prefix: str) -> bool:
+        cur = self.root
+        for s in prefix:
+            if s not in cur.children:
+                return False
+            cur = cur.children[s]
+        return True
+
+
+obj = Trie()
+obj.insert("apple")
+assert obj.search("apple") is True
+assert obj.startsWith("app") is True
+assert obj.startsWith("ple") is False
+
+
+class Trie2:
 
     def __init__(self):
         self.words = set()
@@ -48,7 +91,7 @@ class Trie:
         return prefix in self.prefixes
 
 
-obj = Trie()
+obj = Trie2()
 obj.insert("apple")
 assert obj.search("apple") is True
 assert obj.startsWith("app") is True
