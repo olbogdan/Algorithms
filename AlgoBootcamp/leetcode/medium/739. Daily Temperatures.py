@@ -45,6 +45,34 @@ def dailyTemperatures2(temperatures: List[int]) -> List[int]:
     lenght = len(temperatures)
     result = [0] * lenght
 
+    # iterate from the last day back to the first day
+    for index in range(lenght - 1, -1, -1):
+        nextDay = index + 1
+        while nextDay < lenght:
+            # next day temp is higher than current
+            # so next warm day is found by index `nextDay`
+            if temperatures[nextDay] > temperatures[index]:
+                result[index] = nextDay - index
+                break
+            # next day temp is lover or equals to current day
+            # also next day has recorded value 0 means no warmest day in feature was found
+            elif result[nextDay] == 0:
+                break
+            # next day is lover then current but has a record of a day that warmest then nextDay in feature
+            else:
+                nextDay += result[nextDay]
+    return result
+
+
+assert dailyTemperatures2([73,74,75,71,69,72,76,73]) == [1,1,4,2,1,1,0,0]
+assert dailyTemperatures2([30,40,50,60]) == [1,1,1,0]
+assert dailyTemperatures2([30,60,90]) == [1,1,0]
+
+
+def dailyTemperatures3(temperatures: List[int]) -> List[int]:
+    lenght = len(temperatures)
+    result = [0] * lenght
+
     def dfs(temp, i):
         if i >= lenght:
             return 0
@@ -64,6 +92,23 @@ def dailyTemperatures2(temperatures: List[int]) -> List[int]:
     return result
 
 
-assert dailyTemperatures2([73,74,75,71,69,72,76,73]) == [1,1,4,2,1,1,0,0]
-assert dailyTemperatures2([30,40,50,60]) == [1,1,1,0]
-assert dailyTemperatures2([30,60,90]) == [1,1,0]
+assert dailyTemperatures3([73,74,75,71,69,72,76,73]) == [1,1,4,2,1,1,0,0]
+assert dailyTemperatures3([30,40,50,60]) == [1,1,1,0]
+assert dailyTemperatures3([30,60,90]) == [1,1,0]
+
+
+def dailyTemperatures4(temperatures: List[int]) -> List[int]:
+    res = [0] * len(temperatures)
+    stack = []  # pair: [temp, index]
+
+    for i, t in enumerate(temperatures):
+        while stack and t > stack[-1][0]:
+            stackT, stackInd = stack.pop()
+            res[stackInd] = i - stackInd
+        stack.append((t, i))
+    return res
+
+
+assert dailyTemperatures4([73,74,75,71,69,72,76,73]) == [1,1,4,2,1,1,0,0]
+assert dailyTemperatures4([30,40,50,60]) == [1,1,1,0]
+assert dailyTemperatures4([30,60,90]) == [1,1,0]
