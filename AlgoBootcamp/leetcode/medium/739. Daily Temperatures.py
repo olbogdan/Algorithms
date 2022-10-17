@@ -23,7 +23,25 @@
 from typing import List
 
 
+# O(n)
 def dailyTemperatures(temperatures: List[int]) -> List[int]:
+    result = [0] * len(temperatures)
+    stack = []  # keep indexes, of values in stack decreasing order
+
+    for index, temperature in enumerate(temperatures):
+        while stack and temperatures[stack[-1]] < temperature:
+            prevIdx = stack.pop()
+            result[prevIdx] = index - prevIdx
+        stack.append(index)
+    return result
+
+
+assert dailyTemperatures([73,74,75,71,69,72,76,73]) == [1,1,4,2,1,1,0,0]
+assert dailyTemperatures([30,40,50,60]) == [1,1,1,0]
+assert dailyTemperatures([30,60,90]) == [1,1,0]
+
+
+def dailyTemperatures2(temperatures: List[int]) -> List[int]:
     lenght = len(temperatures)
     result = [0] * lenght
 
@@ -46,6 +64,6 @@ def dailyTemperatures(temperatures: List[int]) -> List[int]:
     return result
 
 
-assert dailyTemperatures([73,74,75,71,69,72,76,73]) == [1,1,4,2,1,1,0,0]
-assert dailyTemperatures([30,40,50,60]) == [1,1,1,0]
-assert dailyTemperatures([30,60,90]) == [1,1,0]
+assert dailyTemperatures2([73,74,75,71,69,72,76,73]) == [1,1,4,2,1,1,0,0]
+assert dailyTemperatures2([30,40,50,60]) == [1,1,1,0]
+assert dailyTemperatures2([30,60,90]) == [1,1,0]
