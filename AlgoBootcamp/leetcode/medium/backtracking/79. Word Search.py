@@ -56,5 +56,6 @@ class Solution:
 
 
 sol = Solution()
-assert sol.exist([["A","A","A","A","A","A"],["A","A","A","A","A","A"],["A","A","A","A","A","A"],["A","A","A","A","A","A"],["A","A","A","A","A","B"],["A","A","A","A","B","A"]], "AAAAAAAAAAAAABB") == False
-assert sol.exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "ABCCED") == True
+assert sol.exist([["A","A","A","A","A","A"],["A","A","A","A","A","A"],["A","A","A","A","A","A"],["A","A","A","A","A","A"],["A","A","A","A","A","B"],["A","A","A","A","B","A"]], "AAAAAAAAAAAAABB") is False
+assert sol.exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "ABCCED") is True
+assert sol.exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "ABCB") is False
