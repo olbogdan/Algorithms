@@ -28,7 +28,30 @@
 # -104 <= val <= 104
 # At most 104 calls will be made to add.
 # It is guaranteed that there will be at least k elements in the array when you search for the kth element.
+from heapq import heapify, heappush, heappop
 from typing import List
+
+
+class KthLargest:
+
+    def __init__(self, k: int, nums: List[int]):
+        self.minHeap = nums
+        self.k = k
+        heapify(self.minHeap)
+
+    def add(self, val: int) -> int:
+        heappush(self.minHeap, val)
+        while len(self.minHeap) > self.k:
+            heappop(self.minHeap)
+        return self.minHeap[0]
+
+
+obj = KthLargest(2, [0])
+assert obj.add(-1) == -1
+assert obj.add(1) == 0
+assert obj.add(-2) == 0
+assert obj.add(-4) == 0
+assert obj.add(3) == 1
 
 
 class KthLargest2:
