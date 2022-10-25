@@ -34,6 +34,53 @@ class Node:
         self.random = random
 
 
+# Runtime: 35 ms, faster than 96.58% of Python3 online submissions for Copy List with Random Pointer.
+# Memory Usage: 14.8 MB, less than 83.27% of Python3 online submissions for Copy List with Random Pointer.
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        # We can avoid using extra space for old_node ---> new_node mapping
+        # by tweaking the original linked list. Simply interweave the nodes of
+        # the old and copied list. For example: Old List: A --> B --> C --> D
+        # InterWeaved List: A --> A' --> B --> B' --> C --> C' --> D --> D'
+        if head is None:
+            return None
+
+        temp = head
+        while temp:
+            node = Node(temp.val)
+            node.next = temp.next
+            temp.next = node
+            temp = node.next
+
+        temp = head
+        while temp:
+            copy = temp.next
+
+            cur = copy.next
+
+            if temp.random:
+                copy.random = temp.random.next
+            if copy.next:
+                copy.next = copy.next.next
+            temp = cur
+
+        return head.next
+
+
+solution = Solution()
+root = Node(1)
+root.next = Node(2)
+n3 = Node(3)
+root.next.next = n3
+root.random = n3
+node = solution.copyRandomList(root)
+assert node.val == 1
+assert node.next.val == 2
+assert node.random.val == 3
+
+empty = solution.copyRandomList(None)
+assert empty is None
+
 
 class Solution1:
     def copyRandomList(self, head: Optional[Node]) -> Optional[Node]:
