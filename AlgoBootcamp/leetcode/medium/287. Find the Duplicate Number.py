@@ -30,16 +30,6 @@ from typing import List
 
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
-        arrsum = 0
-        for i in range(len(nums)):
-            inorderNum = i + 1
-            if i < len(nums) - 1:
-                arrsum -= inorderNum
-            arrsum += nums[i]
-
-        if arrsum == 0:
-            return nums[0]
-        return abs(arrsum)
         slow, fast = 0, 0
         while True:
             slow = nums[slow]
@@ -53,3 +43,11 @@ class Solution:
             slow2 = nums[slow2]
             if slow == slow2:
                 return slow
+
+
+solution = Solution()
+assert solution.findDuplicate([1,3,4,2,2]) == 2
+assert solution.findDuplicate([1,1,1,1,1]) == 1
+assert solution.findDuplicate([1,1,1,2,1]) == 1
+assert solution.findDuplicate([2,2,2]) == 2
+assert solution.findDuplicate([1,2,3,1]) == 1
