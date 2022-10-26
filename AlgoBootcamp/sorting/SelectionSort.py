@@ -1,13 +1,12 @@
 def sort(array):
     for i in range(len(array)):
-        index_of_mim  = i
+        index_of_current_min = i
         for j in range(i+1, len(array)):
-            if array[j] < array[index_of_mim]:
-                index_of_mim = j
-        if index_of_mim != i:
-            array[index_of_mim], array[i] = array[i], array[index_of_mim]
+            if array[j] < array[index_of_current_min]:
+                index_of_current_min = j
+        if index_of_current_min != i:
+            array[index_of_current_min], array[i] = array[i], array[index_of_current_min]
     return array
-
 
 
 def sort2(array):
