@@ -62,3 +62,16 @@ class Solution:
 solution = Solution()
 assert solution.countBits(2) == [0,1,1]
 assert solution.countBits(10) == [0,1,1,2,1,2,2,3,1,2,2]
+
+
+class Solution2:
+    def countBits(self, n: int) -> List[int]:
+        # offset is increasing when reaches half of current i
+        result = [0] * (n + 1)
+        offset = 1
+        for i in range(1, len(result)):
+            # if i % offset == 0:
+            if offset*2 == i:
+                offset = i
+            result[i] = result[i-offset] + 1
+        return result
