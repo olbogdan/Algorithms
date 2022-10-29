@@ -33,9 +33,8 @@ from typing import List
 
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        multiplier = len(piles) / h
-        left = int(sum(piles) / len(piles) * multiplier)
-        if left < 0:
+        left = int(sum(piles) / len(piles) / h)
+        if left == 0:
             left = 1
         right = max(piles)
         result = float(inf)
@@ -45,10 +44,9 @@ class Solution:
             for i in piles:
                 daysToFinishOnePile = int(-(-i // k))
                 capacity -= daysToFinishOnePile
-            if capacity < 0:
-                return False
-            else:
-                return True
+                if capacity < 0:
+                    return False
+            return True
 
         while left <= right:
             mid = (left + right) // 2
@@ -61,7 +59,6 @@ class Solution:
 
 
 sol = Solution()
-# print(sol.minEatingSpeed([3,6,7,11], 8))
-# print(sol.minEatingSpeed([312884470], 312884469))
-# print(sol.minEatingSpeed([1000000000,1000000000], 3))
-print(sol.minEatingSpeed([312884470,968709470], 3))
+assert sol.minEatingSpeed([3,6,7,11], 8) == 4
+assert sol.minEatingSpeed([312884470], 312884469) == 2
+assert sol.minEatingSpeed([1000000000,1000000000], 3) == 1000000000
