@@ -60,3 +60,26 @@ assert sol.climbStairs(3) == 3
 assert sol.climbStairs(4) == 5
 assert sol.climbStairs(10) == 89
 assert sol.climbStairs(1) == 1
+
+
+class Solution3:
+    def climbStairs(self, n: int) -> int:
+        memo = {}
+
+        def dfs(i):
+            if i > n:
+                return 0
+            elif i == n:
+                return 1
+            if i in memo:
+                return memo[i]
+
+            rep = dfs(i + 1) + dfs(i + 2)
+            memo[i] = rep
+            return rep
+
+        return dfs(0)
+
+
+sol = Solution3()
+print(sol.climbStairs(4))
