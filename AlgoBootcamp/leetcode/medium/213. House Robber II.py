@@ -25,6 +25,28 @@ from typing import List
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
+        if len(nums) < 4:
+            return max(nums)
+        return max(self.helper(nums, 0, len(nums) - 1), self.helper(nums, 1, len(nums)))
+
+    def helper(self, nums, left, right):
+        rob1 = rob2 = 0
+        for i in range(left, right):
+            temp = max(nums[i] + rob1, rob2)
+            rob1 = rob2
+            rob2 = temp
+        return rob2
+
+
+sol = Solution()
+assert sol.rob([2,3,2]) == 3
+assert sol.rob([1,2,3,1]) == 4
+assert sol.rob([0]) == 0
+assert sol.rob([1]) == 1
+
+
+class Solution2:
+    def rob(self, nums: List[int]) -> int:
         if len(nums) == 1:
             return nums[0]
         memo = {}
@@ -45,7 +67,7 @@ class Solution:
         return max(first, second)
 
 
-sol = Solution()
+sol = Solution2()
 assert sol.rob([2,3,2]) == 3
 assert sol.rob([1,2,3,1]) == 4
 assert sol.rob([0]) == 0
