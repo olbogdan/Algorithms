@@ -41,3 +41,4 @@ def isPalindrome(s, start, end):
     return True
 
 assert partition("aab") == [["a","a","b"],["aa","b"]]
+assert partition("a") == [["a"]]
