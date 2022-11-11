@@ -42,3 +42,29 @@ def isPalindrome(s, start, end):
 
 assert partition("aab") == [["a","a","b"],["aa","b"]]
 assert partition("a") == [["a"]]
+
+
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        res = []
+        curPart = []
+
+        def isPali(l, r):
+            while l < r:
+                if s[l] != s[r]:
+                    return False
+                l, r = l + 1, r - 1
+            return True
+
+        def dfs(startI):
+            if startI >= len(s):
+                res.append(curPart[:])
+                return
+            for end in range(startI, len(s)):
+                if isPali(startI, end):
+                    curPart.append(s[startI:end + 1])
+                    dfs(end + 1)
+                    curPart.pop()
+
+        dfs(0)
+        return res
