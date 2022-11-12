@@ -68,3 +68,8 @@ class Solution:
 
         dfs(0)
         return res
+
+
+sol = Solution()
+assert sol.partition("aab") == [["a","a","b"],["aa","b"]]
+assert sol.partition("a") == [["a"]]
