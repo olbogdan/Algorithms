@@ -1,5 +1,6 @@
 from typing import List
 
+
 # Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
 #
 # A palindrome string is a string that reads the same backward as forward.
@@ -14,6 +15,7 @@ from typing import List
 #
 # 1 <= s.length <= 16
 # s contains only lowercase English letters.
+
 
 def partition(s: str) -> List[List[str]]:
     result = []
@@ -40,7 +42,8 @@ def isPalindrome(s, start, end):
         end -= 1
     return True
 
-assert partition("aab") == [["a","a","b"],["aa","b"]]
+
+assert partition("aab") == [["a", "a", "b"], ["aa", "b"]]
 assert partition("a") == [["a"]]
 
 
@@ -71,5 +74,5 @@ class Solution:
 
 
 sol = Solution()
-assert sol.partition("aab") == [["a","a","b"],["aa","b"]]
+assert sol.partition("aab") == [["a", "a", "b"], ["aa", "b"]]
 assert sol.partition("a") == [["a"]]
