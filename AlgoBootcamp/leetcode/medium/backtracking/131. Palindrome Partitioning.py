@@ -60,7 +60,7 @@ class Solution:
             return True
 
         def dfs(startI):
-            if startI >= len(s):
+            if startI == len(s):
                 res.append(curPart[:])
                 return
             for end in range(startI, len(s)):
