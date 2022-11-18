@@ -45,6 +45,7 @@
 # 0 <= position[i] < target
 # All the values of position are unique.
 # 0 < speed[i] <= 106
+from typing import List
 
 
 class Solution:
@@ -57,3 +58,8 @@ class Solution:
             if len(stack) >= 2 and stack[-1] <= stack[-2]:
                 stack.pop()
         return len(stack)
+
+
+sol = Solution()
+assert sol.carFleet(10, [3], [3]) == 1
+assert sol.carFleet(100, [0,2,4], [4,2,1]) == 1
