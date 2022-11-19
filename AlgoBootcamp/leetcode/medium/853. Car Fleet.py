@@ -50,6 +50,28 @@ from typing import List
 
 class Solution:
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        pairs = []
+        for i in range(len(position)):
+            pairs.append((position[i], speed[i]))
+        pairs.sort(reverse=True)
+
+        lastSlowest = 0
+        fleet = 0
+        for p, s in pairs:
+            stepsToDestination = (target - p) / s
+            if lastSlowest < stepsToDestination:
+                lastSlowest = stepsToDestination
+                fleet += 1
+        return fleet
+
+
+sol = Solution()
+assert sol.carFleet(10, [3], [3]) == 1
+assert sol.carFleet(100, [0,2,4], [4,2,1]) == 1
+
+
+class Solution2:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
         pair = [(p, s) for p, s in zip(position, speed)]
         pair.sort(reverse=True)
         stack = []
@@ -60,6 +82,6 @@ class Solution:
         return len(stack)
 
 
-sol = Solution()
+sol = Solution2()
 assert sol.carFleet(10, [3], [3]) == 1
 assert sol.carFleet(100, [0,2,4], [4,2,1]) == 1
