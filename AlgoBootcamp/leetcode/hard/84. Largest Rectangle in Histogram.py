@@ -23,8 +23,8 @@ class Solution:
 
         # append to stack in increasing order, new item (curIndex, hight)
         # pop on decreasing order
-        # calculate max, poped item: hight + dist to current itme * height
-        # append curretnt to stack as last poppedIndex - 1 (if stack is empty we can not use 0 coz heights can has gaps)
+        # calculate max, popped item: height + dist to current itme * height
+        # append current to stack as last poppedIndex - 1 (if stack is empty we can not use 0 coz heights can have gaps)
         # if curr item is 0 or end of the list, pop items,
         # calculate for each item: itemHeight * (currIndex(or lastI if list is empty)-itemIndex)
         for i in range(len(heights)):
