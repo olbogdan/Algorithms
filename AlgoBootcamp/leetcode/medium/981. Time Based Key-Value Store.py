@@ -34,10 +34,47 @@
 
 
 class TimeMap:
+
     def __init__(self):
-        """
-        Initialize your data structure here.
-        """
+        self.store = {}
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        newVal = (value, timestamp)
+        if key not in self.store:
+            self.store[key] = []
+        self.store[key].append(newVal)
+
+    def get(self, key: str, timestamp: int) -> str:
+        if key not in self.store:
+            return ""
+        result = ""
+        values = self.store[key]
+        l = 0
+        r = len(values) - 1
+
+        while l <= r:
+            mid = (l + r) // 2
+            if values[mid][1] == timestamp:
+                return values[mid][0]
+            if values[mid][1] < timestamp:
+                result = values[mid][0]
+                l = mid + 1
+            else:
+                r = mid - 1
+        return result
+
+
+obj = TimeMap()
+obj.set("a","bar",1)
+obj.set("x","b",3)
+assert obj.get("b",3) == ""
+obj.set("foo","bar2",4)
+assert obj.get("foo",4) == "bar2"
+assert obj.get("foo",5) == "bar2"
+
+
+class TimeMap2:
+    def __init__(self):
         self.keyStore = {}  # key : list of [val, timestamp]
 
     def set(self, key: str, value: str, timestamp: int) -> None:
@@ -56,3 +93,12 @@ class TimeMap:
             else:
                 r = m - 1
         return res
+
+
+obj = TimeMap2()
+obj.set("a","bar",1)
+obj.set("x","b",3)
+assert obj.get("b",3) == ""
+obj.set("foo","bar2",4)
+assert obj.get("foo",4) == "bar2"
+assert obj.get("foo",5) == "bar2"
