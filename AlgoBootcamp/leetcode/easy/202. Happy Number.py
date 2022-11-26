@@ -42,3 +42,4 @@ class Solution:
 
 sol = Solution()
 assert sol.isHappy(19) is True
+assert sol.isHappy(2) is False
