@@ -29,17 +29,43 @@ class Solution:
     def isHappy(self, n: int) -> bool:
         memo = set()
         while n != 1:
+            subSum = 0
+
+            # 10 % 10 == 0
+            # 10 // 10 == 1
+            # 1 % 10 == 1
+            # 1 // 10 == 0
+            subN = n
+            while subN != 0:
+                subSum += (subN % 10) ** 2
+                subN = subN // 10
+
+            if subSum in memo:
+                return False
+            memo.add(subSum)
+            n = subSum
+        return True
+
+
+sol = Solution()
+assert sol.isHappy(19) is True
+assert sol.isHappy(2) is False
+
+
+class Solution2:
+    def isHappy(self, n: int) -> bool:
+        memo = set()
+        while n != 1:
             z = 0
             for x in str(n):
-                z+=int(x)**2
+                z += int(x)**2
             n = z
             if z in memo:
                 return False
             memo.add(z)
-        if n == 1:
-            return True
+        return True
 
 
-sol = Solution()
+sol = Solution2()
 assert sol.isHappy(19) is True
 assert sol.isHappy(2) is False
