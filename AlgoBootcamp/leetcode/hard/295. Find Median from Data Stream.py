@@ -33,9 +33,58 @@
 #
 # If all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
 # If 99% of all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
+from heapq import heappush, heappop
 
 
 class MedianFinder:
+
+    def __init__(self):
+        # heap in py is: 1(Top), 2, 3, 4
+        self.left = []  # inverse numbers (to return biggest element)
+        self.right = []  # natural order, will return smallest element
+
+    def addNum(self, num: int) -> None:
+        if self.right and num > self.right[0]:
+            # insert to right
+            heappush(self.right, num)
+        else:
+            # insert to left
+            heappush(self.left, -num)
+
+        # normalize size of arrays
+        self.normalizeArrays()
+
+    def normalizeArrays(self):
+        if abs(len(self.left) - len(self.right)) <= 1:
+            return
+        if len(self.left) < len(self.right):
+            # pop right and push inverse to left
+            num = heappop(self.right)
+            heappush(self.left, -num)
+        elif len(self.left) > len(self.right):
+            # pop left and push inverse to right
+            num = heappop(self.left)
+            heappush(self.right, -num)
+
+    def findMedian(self) -> float:
+        if len(self.left) > len(self.right):
+            return -self.left[0]
+        elif len(self.left) < len(self.right):
+            return self.right[0]
+        else:
+            return (-self.left[0] + self.right[0]) / 2
+
+
+obj = MedianFinder()
+obj.addNum(1)
+assert obj.findMedian() == 1
+obj.addNum(2)
+assert obj.findMedian() == 1.5
+obj.addNum(5)
+assert obj.findMedian() == 2
+
+
+class MedianFinder2:
 
     def __init__(self):
         self.left = []
@@ -95,7 +144,7 @@ class MedianFinder:
             return (self.left[-1] + self.right[0]) / 2
 
 
-obj = MedianFinder()
+obj = MedianFinder2()
 obj.addNum(1)
 assert obj.findMedian() == 1
 obj.addNum(2)
