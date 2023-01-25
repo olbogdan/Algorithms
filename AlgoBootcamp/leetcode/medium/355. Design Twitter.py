@@ -32,13 +32,14 @@
 # 0 <= tweetId <= 104
 # All the tweets have unique IDs.
 # At most 3 * 104 calls will be made to postTweet, getNewsFeed, follow, and unfollow.
+from collections import defaultdict
 from typing import List
 
 
 class Twitter:
 
     def __init__(self):
-        self.followMap = {}
+        self.followMap = defaultdict(set)
         self.tweets = []
 
     def postTweet(self, userId: int, tweetId: int) -> None:
@@ -56,14 +57,11 @@ class Twitter:
         return newTweets
 
     def follow(self, followerId: int, followeeId: int) -> None:
-        if followerId not in self.followMap.keys():
-            self.followMap[followerId] = set()
         self.followMap[followerId].add(followeeId)
 
     def unfollow(self, followerId: int, followeeId: int) -> None:
-        if followerId in self.followMap.keys() and followeeId in self.followMap[followerId]:
+        if followerId in self.followMap and followeeId in self.followMap[followerId]:
             self.followMap[followerId].remove(followeeId)
-            # del?
 
 
 obj = Twitter()
