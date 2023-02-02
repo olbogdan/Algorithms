@@ -23,3 +23,39 @@
 # 0 <= bank.length <= 10
 # startGene.length == endGene.length == bank[i].length == 8
 # startGene, endGene, and bank[i] consist of only the characters ['A', 'C', 'G', 'T'].
+from collections import deque
+from typing import List
+
+
+class Solution:
+    def minMutation(self, startGene: str, endGene: str, bank: List[str]) -> int:
+        # TAA -> TCC
+        # Bank 1 TBA, 2 TBC, 3 TCC
+
+        bankSet = set(bank)
+        visited = set()
+        queue = deque()
+        count = 0
+        queue.append(startGene)
+        while queue:
+            lenOfLevel = len(queue)
+            for i in range(lenOfLevel):
+                mut = queue.popleft()
+                if mut == endGene:
+                    return count
+                # replace each gene i by one of ACGT
+                for genI in range(len(mut)):
+                    for choice in 'ACGT':
+                        variation = mut[:genI] + choice + mut[genI + 1:]
+                        if variation not in visited and variation in bankSet:
+                            queue.append(variation)
+                            visited.add(variation)
+
+            count += 1
+
+        return -1
+
+
+sol = Solution()
+assert sol.minMutation("AACCGGTT", "AACCGGTA", ["AACCGGTA"]) == 1
+assert sol.minMutation("AACCGGTT", "AAACGGTA", ["AACCGGTA","AACCGCTA","AAACGGTA"]) == 2
