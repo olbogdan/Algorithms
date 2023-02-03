@@ -50,3 +50,20 @@ assert sol.increasingTriplet([2,1,5,10,4,6]) is True
 assert sol.increasingTriplet([2,1,5,0,4,6]) is True
 assert sol.increasingTriplet([5,4,3,2,1]) is False
 assert sol.increasingTriplet([1,2,3,4,5]) is True
+
+
+class Solution2:
+    def increasingTriplet(self, nums: List[int]) -> bool:
+        dp = [1] * len(nums)
+        for i in range(len(nums)):
+            for j in range(0, i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+                    if dp[i] == 3:
+                        return True
+        return False
+
+
+sol = Solution2()
+res = sol.increasingTriplet([20,100,10,12,5,13])
+assert res is True
