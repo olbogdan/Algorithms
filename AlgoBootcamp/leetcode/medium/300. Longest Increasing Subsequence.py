@@ -26,6 +26,7 @@
 #
 #
 # Follow up: Can you come up with an algorithm that runs in O(n log(n)) time complexity?
+from cmath import inf
 from typing import List
 
 
@@ -49,8 +50,35 @@ res = sol.lengthOfLIS([7,7,7,7,7,7,7])
 assert res == 1
 
 
+class Solution2:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        memo = {}
+
+        def dp(prev, cur):
+            if cur >= len(nums):
+                return 0
+            if cur in memo:
+                return memo[cur]
+
+            longest = 0
+            for i in range(cur, len(nums)):
+                if nums[i] > prev:
+                    localMax = 1 + dp(nums[i], i+1)
+                    longest = max(longest, localMax)
+            memo[cur] = longest
+            return longest
+
+        return dp(float(-inf), 0)
+
+
+sol = Solution2()
+res = sol.lengthOfLIS([18,55,66,2,3,54])
+print(res)
+# assert res == 4
+
+
 # nlog(n)
-class Solution:
+class Solution3:
     def lengthOfLIS(self, nums: List[int]) -> int:
         res = []
         for n in nums:
@@ -74,7 +102,7 @@ class Solution:
         return r
 
 
-sol = Solution()
+sol = Solution3()
 res = sol.lengthOfLIS([0,1,0,3,2,3])
 assert res == 4
 res = sol.lengthOfLIS([3,5,6,2,5,4,19,5,6,7,12])
