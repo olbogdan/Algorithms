@@ -29,6 +29,32 @@ from typing import List
 
 class Solution:
     def shuffle(self, nums: List[int], n: int) -> List[int]:
+        for i in range(n):
+            # left = nums[i]
+            # right = nums[i+n]
+            # nums[i] = left * 1000 + right
+            nums[i] = nums[i] << 10
+            right = nums[i+n]
+            nums[i] = nums[i] | right
+        last = n * 2 - 1
+        for i in range(n-1, -1, -1):
+            # right = nums[i] % 1000
+            # left = (nums[i] - right) // 1000
+            left = nums[i] >> 10
+            right = nums[i] & 1023
+            nums[last] = right
+            nums[last-1] = left
+            last -= 2
+        return nums
+
+
+sol = Solution()
+assert sol.shuffle([2,5,1,3,4,7], 3) == [2,3,5,4,1,7]
+assert sol.shuffle([1,2,3,4,4,3,2,1], 4) == [1,4,2,3,3,2,4,1]
+
+
+class Solution2:
+    def shuffle(self, nums: List[int], n: int) -> List[int]:
         result = []
         for i in range(n):
             result.append(nums[i])
@@ -36,6 +62,6 @@ class Solution:
         return result
 
 
-sol = Solution()
+sol = Solution2()
 assert sol.shuffle([2,5,1,3,4,7], 3) == [2,3,5,4,1,7]
 assert sol.shuffle([1,2,3,4,4,3,2,1], 4) == [1,4,2,3,3,2,4,1]
