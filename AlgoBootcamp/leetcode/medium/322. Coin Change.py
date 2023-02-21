@@ -6,27 +6,28 @@
 # Input: coins = [1,2,5], amount = 11
 # Output: 3
 # Explanation: 11 = 5 + 5 + 1
+# #DP
 from math import inf
+from typing import List
 
 
-def coinChange(coins: [int], amount: int) -> int:
-    memo = [float(inf)] * (amount + 1)
-    memo[0] = 0
-    coins.sort()
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        dp = [float(inf)] * (amount+1) # [inf(0), inf(1), inf(2)] for amount 2
+        dp[0] = 0
+        coins.sort()
+        for i in range(len(dp)):
+            for c in coins:
+                if c > i:
+                    break
+                prevAmount = dp[i - c]
+                dp[i] = min(dp[i], prevAmount+1)
+        if dp[amount] == float(inf):
+            return -1
+        return dp[amount]
 
-    for a in range(0, amount + 1):
-        for c in coins:
-            if c > a:
-                break
 
-            diff = a - c
-            memo[a] = min(memo[a], 1 + memo[diff])
-
-    if memo[-1] == float(inf):
-        return -1
-    else:
-        return memo[-1]
-
-assert coinChange([1, 2, 5], 11) == 3
-assert coinChange([1], 11) == 11
-assert coinChange([100], 11) == -1
+sol = Solution()
+assert sol.coinChange([1, 2, 5], 11) == 3
+assert sol.coinChange([1], 11) == 11
+assert sol.coinChange([100], 11) == -1
