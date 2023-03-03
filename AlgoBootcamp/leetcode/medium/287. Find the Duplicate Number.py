@@ -30,6 +30,36 @@ from typing import List
 
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
+        # [3, 2, 1, 3(slow/fast)]
+        # [1, 2(slow), 3(fast), 4, 4]
+        slow = nums[nums[0]]
+        fast = nums[slow]
+        while slow != fast:
+            # jump slow 1 step
+            slow = nums[slow]
+            # jump fast 2 steps
+            fast = nums[nums[fast]]
+        # slow/fast point to sthe head of a cycle
+        # distance haed of cycle to tail of cycle == head node to tail of cycle
+        # iterate from head node and head of cycle +1 till they meet at a tail
+        p1 = nums[0]
+        p2 = slow
+        while p1 != p2:
+            p1 = nums[p1]
+            p2 = nums[p2]
+        return p1
+
+
+solution = Solution()
+assert solution.findDuplicate([1,3,4,2,2]) == 2
+assert solution.findDuplicate([1,1,1,1,1]) == 1
+assert solution.findDuplicate([1,1,1,2,1]) == 1
+assert solution.findDuplicate([2,2,2]) == 2
+assert solution.findDuplicate([1,2,3,1]) == 1
+
+
+class Solution2:
+    def findDuplicate(self, nums: List[int]) -> int:
         slow, fast = 0, 0
         while True:
             slow = nums[slow]
@@ -45,9 +75,36 @@ class Solution:
                 return slow
 
 
-solution = Solution()
+solution = Solution2()
 assert solution.findDuplicate([1,3,4,2,2]) == 2
 assert solution.findDuplicate([1,1,1,1,1]) == 1
 assert solution.findDuplicate([1,1,1,2,1]) == 1
 assert solution.findDuplicate([2,2,2]) == 2
 assert solution.findDuplicate([1,2,3,1]) == 1
+
+def findDuplicate(nums):
+    length = len(nums)
+    low = 0
+    high = length - 1
+
+    while low < high:
+        mid = (low + high) // 2
+        count = 0
+
+        for i in range(length):
+            if nums[i] <= mid:
+                count += 1
+
+        if count <= mid:
+            low = mid + 1
+        else:
+            high = mid
+
+    return low
+
+
+assert findDuplicate([1,3,4,2,2]) == 2
+assert findDuplicate([1,1,1,1,1]) == 1
+assert findDuplicate([1,1,1,2,1]) == 1
+assert findDuplicate([2,2,2]) == 2
+assert findDuplicate([1,2,3,1]) == 1
