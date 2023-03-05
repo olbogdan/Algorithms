@@ -7,6 +7,7 @@
 # Output: 3
 # Explanation: 11 = 5 + 5 + 1
 # #DP
+from functools import cache
 from math import inf
 from typing import List
 
@@ -31,3 +32,20 @@ sol = Solution()
 assert sol.coinChange([1, 2, 5], 11) == 3
 assert sol.coinChange([1], 11) == 11
 assert sol.coinChange([100], 11) == -1
+
+
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        @cache
+        def dp(i, am):
+            if i == len(coins) or am < 0:
+                return float(inf)
+            if am == 0:
+                return 0
+
+            return min(1 + dp(i, am - coins[i]), dp(i + 1, am))
+
+        r = dp(0, amount)
+        if r == float(inf):
+            return -1
+        return r
