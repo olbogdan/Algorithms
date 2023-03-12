@@ -55,3 +55,19 @@ class Solution:
 
 sol = Solution()
 assert sol.maxCoins([3,1,5,8]) == 167
+
+
+class Solution2:
+    def maxCoins(self, A):
+        A, n = [1] + A + [1], len(A) + 2
+        dp = [[0] * n for _ in range(n)]
+
+        for i in range(n - 2, -1, -1):
+            for j in range(i + 2, n):
+                dp[i][j] = max(A[i] * A[k] * A[j] + dp[i][k] + dp[k][j] for k in range(i + 1, j))
+        # The result is the maximum coins for the original problem
+        return dp[0][n - 1]
+
+
+sol = Solution2()
+assert sol.maxCoins([3,1,5,8]) == 167
