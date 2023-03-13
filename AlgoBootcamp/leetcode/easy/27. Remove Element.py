@@ -83,3 +83,27 @@ class Solution2:
 sol = Solution2()
 assert sol.removeElement([3,2,2,3], 3) == 2
 assert sol.removeElement([0,1,2,2,3,0,4,2], 2) == 5
+
+
+class Solution3:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        R = len(nums) - 1
+        L = 0
+        repsOfVal = 0
+        while L <= R:
+            if nums[R] == val:
+                R -= 1
+                repsOfVal += 1
+            elif nums[L] != val:
+                L += 1
+            elif nums[L] == val:
+                nums[L] = nums[R]
+                repsOfVal += 1
+                R -= 1
+                L += 1
+        return len(nums) - repsOfVal
+
+
+sol = Solution3()
+assert sol.removeElement([3,2,2,3], 3) == 2
+assert sol.removeElement([0,1,2,2,3,0,4,2], 2) == 5
