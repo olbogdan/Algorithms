@@ -52,6 +52,22 @@ from typing import List
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
         slow = 0
+
+        for fast in range(len(nums)):
+            if nums[fast] != val:
+                nums[fast], nums[slow] = nums[slow], nums[fast]
+                slow += 1
+        return slow
+
+
+sol = Solution()
+assert sol.removeElement([3,2,2,3], 3) == 2
+assert sol.removeElement([0,1,2,2,3,0,4,2], 2) == 5
+
+
+class Solution2:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        slow = 0
         fast = 0
         # [1, 3, 1, 1]
         while fast < len(nums):
@@ -64,6 +80,6 @@ class Solution:
         return slow
 
 
-sol = Solution()
+sol = Solution2()
 assert sol.removeElement([3,2,2,3], 3) == 2
 assert sol.removeElement([0,1,2,2,3,0,4,2], 2) == 5
