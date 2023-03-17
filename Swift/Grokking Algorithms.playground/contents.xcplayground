@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' buildActiveScheme='true' importAppTypes='true'>
+    <pages>
+        <page name='BinSearch'/>
+        <page name='SelectionSort'/>
+        <page name='sum'/>
+        <page name='QSort'/>
+        <page name='Dictionary'/>
+        <page name='Breadth First Search'/>
+        <page name='Dijkstra'/>
+        <page name='SetCovering'/>
+        <page name='Fibonacci'/>
+        <page name='FizzBuzz'/>
+        <page name='Knapsack'/>
+        <page name='LongestCommonSubstring'/>
+        <page name='LongestCommonSubsequence'/>
+        <page name='MergeSort'/>
+    </pages>
+</playground>

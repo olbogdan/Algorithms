@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' buildActiveScheme='true' importAppTypes='true'>
+    <pages>
+        <page name='ReversedString'/>
+        <page name='Palindrome'/>
+        <page name='ReversedInt'/>
+        <page name='MaxChars'/>
+        <page name='ChunkProblem'/>
+        <page name='Anagrams'/>
+        <page name='Capitalize'/>
+        <page name='Steps'/>
+        <page name='Pyramide'/>
+        <page name='Vowels'/>
+        <page name='MatrixSpirals'/>
+        <page name='Fibonacci'/>
+    </pages>
+</playground>
