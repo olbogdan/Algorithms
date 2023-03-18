@@ -33,7 +33,7 @@ Constraints:
 -1000 <= nums[i] <= 1000
 */
 
-package leetcode.`1991`
+package leetcode.easy
 
 import kotlin.test.assertEquals
 
