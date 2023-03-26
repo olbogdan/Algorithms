@@ -70,3 +70,26 @@ class Solution:
 sol = Solution()
 res = sol.gridGame([[3,3,1],[8,5,2]])
 print(res)
+
+
+class Solution2:
+    def gridGame(self, grid: List[List[int]]) -> int:
+        COL = len(grid[0])
+
+        # pivot splits the grid on two parts
+        # second robot can choose max from the left and right part leftover
+        # minimize the options of the second robot, try all pivots
+        res = float(inf)
+        top = sum(grid[0])
+        bottom = 0
+        for pivot in range(COL):
+            top = top - grid[0][pivot]
+            maxRob2 = max(top, bottom)
+            res = min(res, maxRob2)
+            bottom = bottom + grid[1][pivot]
+        return res
+
+
+sol = Solution2()
+res = sol.gridGame([[3,3,1],[8,5,2]])
+print(res)
