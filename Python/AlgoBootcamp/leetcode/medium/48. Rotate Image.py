@@ -10,6 +10,8 @@
 # 1 <= n <= 20
 # -1000 <= matrix[i][j] <= 1000
 
+
+
 class Solution:
     def rotate(self, matrix: [[int]]):
         left = top = 0
@@ -19,7 +21,7 @@ class Solution:
         while True:
             if left > right:
                 break
-            # upade bounderies
+            # upgrade boundaries
             if left + offset >= right:
                 left += 1
                 right -= 1
