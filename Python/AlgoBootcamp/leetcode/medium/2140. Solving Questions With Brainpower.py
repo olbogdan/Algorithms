@@ -35,6 +35,7 @@
 # 1 <= questions.length <= 105
 # questions[i].length == 2
 # 1 <= pointsi, brainpoweri <= 105
+# #knapsack #dp
 from typing import List
 
 
@@ -61,3 +62,24 @@ class Solution:
 
 sol = Solution()
 assert sol.mostPoints([[1,1],[2,2],[3,3],[4,4],[5,5]]) == 7
+
+
+class Solution2:
+    def mostPoints(self, questions: List[List[int]]) -> int:
+        N = len(questions)
+        memo = [0] * N
+        for i in range(N - 1, -1, -1):
+            cur, offset = questions[i]
+            # take or not
+            takeOffset = i + 1 + offset
+            notTakeOffsett = i + 1
+            maxVal = max(
+                cur + memo[takeOffset] if takeOffset < N else cur,
+                memo[notTakeOffsett] if notTakeOffsett < N else 0
+            )
+            memo[i] = maxVal
+        return memo[0]
+
+
+sol = Solution2()
+assert sol.mostPoints([[3,2],[4,3],[4,4],[2,5]]) == 5
