@@ -29,10 +29,32 @@
 #
 # 1 <= low <= high <= 105
 # 1 <= zero, one <= low
+# #dp #stairs
 from functools import cache
 
 
 class Solution:
+    def countGoodStrings(self, low: int, high: int, zero: int, one: int) -> int:
+        MOD = 10 ** 9 + 7
+        N = high
+        memo = {0: 1}
+
+        result = 0
+        # [1, 0, 0, 0] 011
+        for i in range(1, N + 1):
+            memo[i] = (memo.get(i - zero, 0) + memo.get(i - one, 0)) % MOD
+
+            if i >= low:
+                result += memo[i]
+
+        return result % MOD
+
+
+sol = Solution()
+assert sol.countGoodStrings(2, 3, 1, 2) == 5
+
+
+class Solution1:
     def countGoodStrings(self, low: int, high: int, zero: int, one: int) -> int:
         MOD = 10 ** 9 + 7
 
@@ -51,5 +73,39 @@ class Solution:
         return dp(0)
 
 
-sol = Solution()
+sol = Solution1()
+assert sol.countGoodStrings(2, 3, 1, 2) == 5
+
+
+class Solution2:
+    def countGoodStrings(self, low: int, high: int, zero: int, one: int) -> int:
+        MOD = 10 ** 9 + 7
+        N = high
+        memo = {}
+        memo[0] = 1
+
+        result = 0
+        # [1, 0, 0, 0] 011
+        for i in range(1, N + 1):
+            curr = 0
+            # zeros
+            zerosI = i - zero
+            if zerosI in memo:
+                curr = memo[zerosI]
+            # ones
+            onesI = i - one
+            if onesI in memo:
+                curr += memo[onesI]
+
+            if curr != 0:
+                memo[i] = curr
+
+            if i >= low:
+                result += curr
+                result %= MOD
+
+        return result
+
+
+sol = Solution2()
 assert sol.countGoodStrings(2, 3, 1, 2) == 5
