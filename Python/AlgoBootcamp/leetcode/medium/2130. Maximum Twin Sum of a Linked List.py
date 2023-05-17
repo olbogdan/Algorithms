@@ -77,3 +77,36 @@ n = ListNode(1, ListNode(1000))
 assert sol.pairSum(n) == 1001
 n = ListNode(1, ListNode(10, ListNode(10, ListNode(1))))
 assert sol.pairSum(n) == 20
+
+
+class Solution2:
+    def pairSum(self, head: Optional[ListNode]) -> int:
+        # rotate the list from mid to start using fast/slow technick
+        slow = fast = head
+        while fast.next and fast.next.next:
+            fast = fast.next.next
+            slow = slow.next
+
+        prev = None
+        next = slow.next
+        slow.next = None  # break connection of first half to second
+        # revers second half
+        while next:
+            tempNext = next.next
+            next.next = prev
+            prev = next
+            next = tempNext
+
+        secondHalf = prev
+        result = 0
+        while head:
+            result = max(result, head.val + secondHalf.val)
+
+            head = head.next
+            secondHalf = secondHalf.next
+        return result
+
+
+sol = Solution2()
+n = ListNode(1, ListNode(10, ListNode(10, ListNode(1))))
+assert sol.pairSum(n) == 20
