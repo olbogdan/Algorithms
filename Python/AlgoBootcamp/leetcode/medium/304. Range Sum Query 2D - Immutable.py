@@ -60,4 +60,4 @@ class NumMatrix:
 
 obj = NumMatrix([[1,1,1],[1,1,1],[1,1,1]])
 res = obj.sumRegion(0,0,2,2)
-print(res)
+assert res == 9
