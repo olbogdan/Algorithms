@@ -3,8 +3,58 @@
 #
 # Input: nums = [1,1,1,2,2,3], k = 2
 # Output: [1,2]
+from collections import Counter, defaultdict
+from typing import List
+
 
 # O(n)
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        numReps = Counter(nums)
+        repsToNum = {}
+        for num, reps in numReps.items():
+            repsToNum.setdefault(reps, []).append(num)
+
+        result = []
+        for i in reversed(range(len(nums) + 1)):
+            if i in repsToNum:
+                for num in repsToNum[i]:
+                    if len(result) == k:
+                        return result
+                    result.append(num)
+        return result
+
+
+sol = Solution()
+res = sol.topKFrequent([1], 1)
+assert res == [1]
+assert sol.topKFrequent([-1, -1], 1) == [-1]
+
+
+class Solution2:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        numReps = Counter(nums)
+        repsToNum = defaultdict(list)
+        for num, reps in numReps.items():
+            repsToNum[reps].append(num)
+
+        result = []
+        for i in reversed(range(len(nums) + 1)):
+            for num in repsToNum[i]:
+                if len(result) == k:
+                    return result
+                result.append(num)
+
+        return result
+
+
+sol = Solution2()
+res = sol.topKFrequent([1], 1)
+assert res == [1]
+assert sol.topKFrequent([-1, -1], 1) == [-1]
+
+
 def topKFrequent(nums: [int], k: int) -> [int]:
     frequent = {}
     for n in nums:
