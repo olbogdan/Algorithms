@@ -43,6 +43,7 @@ class Solution:
 
 
 sol = Solution()
-arr = [1,5,1,1,6,4]
 arr = sol.wiggleSort([1,5,1,1,6,4])
 assert arr == [1,6,1,5,1,4]
+arr = sol.wiggleSort([4, 5, 5, 6])
+assert arr == [5,6,4,5]
