@@ -42,3 +42,33 @@ result = sol.numOfSubarrays([2,5,8], 1, 3)
 assert result == 2
 result = sol.numOfSubarrays([2,2,2,2,5,5,5,8], 3, 4)
 assert result == 3
+
+
+class Solution2:
+    def numOfSubarrays(self, arr: List[int], k: int, threshold: int) -> int:
+        result = 0
+        curSum = 0
+        r = 0
+        while r < k:
+            curSum += arr[r]
+            r += 1
+
+        if curSum / k >= threshold:
+            result += 1
+
+        l = 1
+        while r < len(arr):
+            curSum -= arr[l - 1]
+            curSum += arr[r]
+            if curSum / k >= threshold:
+                result += 1
+            l += 1
+            r += 1
+        return result
+
+
+sol = Solution2()
+result = sol.numOfSubarrays([2,5,8], 1, 3)
+assert result == 2
+result = sol.numOfSubarrays([2,2,2,2,5,5,5,8], 3, 4)
+assert result == 3
