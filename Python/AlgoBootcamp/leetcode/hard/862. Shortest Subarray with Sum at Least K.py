@@ -24,36 +24,44 @@
 # -105 <= nums[i] <= 105
 # 1 <= k <= 109
 import collections
+from cmath import inf
+from typing import List
 
 
-class Solution:
-    # def shortestSubarray(self, nums, k):
-        # d = collections.deque([[0, 0]])
-        # res, cur = float('inf'), 0
-        # for i, a in enumerate(nums):
-        #     cur += a
-        #     while d and cur - d[0][1] >= k:
-        #         res = min(res, i + 1 - d.popleft()[0])
-        #     while d and cur <= d[-1][1]:
-        #         d.pop()
-        #     d.append([i + 1, cur])
-        # return res if res < float('inf') else -1
-    def shortestSubarray(self, A, K):
-        N = len(A)
-        B = [0] * (N + 1)
-        for i in range(N):
-            B[i + 1] = B[i] + A[i]
-        d = collections.deque()
-        res = N + 1
-        for i in range(N + 1):
-            while d and B[i] - B[d[0]] >= K: #[0, 10(TRUE), 120T, 1120b[d0], 920(FALSE)]
-                res = min(res, i - d.popleft())
-            while d and B[i] <= B[d[-1]]: # True only if negative val or 0
-                d.pop()
-            d.append(i)
-        return res if res <= N else -1
+class Solution1:
+    def shortestSubarray(self, nums: List[int], k: int) -> int:
+        N = len(nums)
+        prefixes = [0] * (N + 1)
+        for i in range(1, N + 1):
+            prefixes[i] = nums[i - 1] + prefixes[i - 1]
+
+        res = float(inf)
+        queue = collections.deque()
+        for i in range(len(prefixes)):
+            while queue and prefixes[i] - prefixes[queue[0]] >= k:
+                res = min(res, i - queue.popleft())
+
+            while queue and prefixes[i] <= prefixes[queue[-1]]:
+                queue.pop()
+
+            queue.append(i)
+        return -1 if res == float(inf) else res
 
 
-sol = Solution()
-res1 = sol.shortestSubarray([2,-1,2], 3)
+sol = Solution1()
+res1 = sol.shortestSubarray([2, -1, 2], 3)
 assert res1 == 3
+
+
+class Solution2:
+    def shortestSubarray(self, nums, k):
+        d = collections.deque([[0, 0]])
+        res, cur = float('inf'), 0
+        for i, a in enumerate(nums):
+            cur += a
+            while d and cur - d[0][1] >= k:
+                res = min(res, i + 1 - d.popleft()[0])
+            while d and cur <= d[-1][1]:
+                d.pop()
+            d.append([i + 1, cur])
+        return res if res < float('inf') else -1
