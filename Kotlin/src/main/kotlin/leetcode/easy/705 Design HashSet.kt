@@ -75,6 +75,74 @@ class `705 Design HashSet` {
 }
 
 
+class `705 Design HashSet2` {
+    private var size = 10007
+    private val loadFactor = 0.75
+    private var count = 0
+    private var set = Array<Node?>(size) { null }
+
+    fun add(key: Int) {
+        if (contains(key)) return
+        if (count >= size * loadFactor) resize()
+        val index = getHash(key)
+        val node = Node(key)
+        node.next = set[index]
+        set[index] = node
+        count++
+    }
+
+    fun remove(key: Int) {
+        val index = getHash(key)
+        val dummy = Node(0)
+        dummy.next = set[index]
+        var prev: Node? = dummy
+        var curr = set[index]
+        while (curr != null) {
+            if (curr.value == key) {
+                prev?.next = curr.next
+                set[index] = dummy.next
+                count--
+                return
+            }
+            prev = curr
+            curr = curr.next
+        }
+    }
+
+    fun contains(key: Int): Boolean {
+        val index = getHash(key)
+        var curr = set[index]
+        while (curr != null) {
+            if (curr.value == key) {
+                return true
+            }
+            curr = curr.next
+        }
+        return false
+    }
+
+    private fun resize() {
+        size *= 2 // double the size
+        val oldSet = set
+        set = Array<Node?>(size) { null } // create a new array with the new size
+        count = 0
+        for (node in oldSet) {
+            var curr = node
+            while (curr != null) {
+                add(curr.value) // rehash all the elements in the old array
+                curr = curr.next
+            }
+        }
+    }
+
+    private fun getHash(key: Int): Int {
+        return key % size
+    }
+
+    private class Node(val value: Int, var next: Node? = null)
+}
+
+
 
 /**
  * Your MyHashSet object will be instantiated and called as such:
