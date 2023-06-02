@@ -48,8 +48,8 @@
 # 1 <= bombs.length <= 100
 # bombs[i].length == 3
 # 1 <= xi, yi, ri <= 105
-from cmath import sqrt
 from collections import defaultdict
+from math import sqrt
 from typing import List
 
 
@@ -61,7 +61,7 @@ class Solution:
             for j in range(i + 1, N):
                 x1, y1, r1 = bombs[i]
                 x2, y2, r2 = bombs[j]
-                distance = sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+                distance = sqrt((x1 - x2)**2 + (y1 - y2)**2)
                 if r1 >= distance:
                     adj[i].append(j)
                 if r2 >= distance:
@@ -82,3 +82,4 @@ class Solution:
 
 sol = Solution()
 assert sol.maximumDetonation([[1,1,5],[10,10,5]]) == 1
+assert sol.maximumDetonation([[1,2,3],[2,3,1],[3,4,2],[4,5,3],[5,6,4]]) == 5
