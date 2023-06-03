@@ -61,3 +61,4 @@ class Solution:
 
 sol = Solution()
 assert sol.numOfMinutes(6, 2, [2,2,-1,2,2,2], [0,0,1,0,0,0]) == 1
+assert sol.numOfMinutes(1, 0, [-1], [0]) == 0
