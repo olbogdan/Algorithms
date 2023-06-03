@@ -65,3 +65,8 @@ class `1376 Time Needed to Inform All Employees` {
     }
 }
 
+fun main() {
+    val sol = `1376 Time Needed to Inform All Employees`()
+    assert(sol.numOfMinutes(6, 2, intArrayOf(2,2,-1,2,2,2), intArrayOf(0,0,1,0,0,0)) == 1)
+    assert(sol.numOfMinutes(1, 0, intArrayOf(-1), intArrayOf(0)) == 0)
+}
