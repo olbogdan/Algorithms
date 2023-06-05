@@ -1,9 +1,5 @@
 package leetcode.easy
 
-import kotlin.math.abs
-
-import kotlin.math.abs
-
 class `1232 Check If It Is a Straight Line`  {
     fun checkStraightLine(coordinates: Array<IntArray>): Boolean {
         // slope = (y1 - y2) / (x1 - x2)
