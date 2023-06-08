@@ -33,6 +33,42 @@ s consists of lowercase English letters, digits, and square brackets '[]'.
 s is guaranteed to be a valid input.
 All the integers in s are in the range [1, 300].
 */
+
+
+class `394 Decode String2` {
+    var index = 0
+
+    fun decodeString(s: String): String {
+        val decoded = StringBuilder()
+
+        while (index < s.length && s[index] != ']') {
+            if (!s[index].isDigit()) {
+                decoded.append(s[index++])
+            } else {
+                var k = 0
+                while (index < s.length && s[index].isDigit()) {
+                    k = k * 10 + (s[index++] - '0')
+                }
+
+                // case: [
+                index++
+                val answer = decodeString(s)
+
+                // case: ]
+                index++
+
+                // add k*encoded to decoded
+                repeat(k) {
+                    decoded.append(answer)
+                }
+            }
+        }
+
+        return decoded.toString()
+    }
+}
+
+
 class `394 Decode String` {
     fun decodeString(s: String): String {
         val stackNumbers = mutableListOf<String>()
