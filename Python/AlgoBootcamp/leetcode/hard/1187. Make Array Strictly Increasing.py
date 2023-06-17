@@ -28,25 +28,28 @@
 # 1 <= arr1.length, arr2.length <= 2000
 # 0 <= arr1[i], arr2[i] <= 10^9
 from cmath import inf
-from functools import cache
 from typing import List
 
 
 class Solution:
     def makeArrayIncreasing(self, arr1: List[int], arr2: List[int]) -> int:
 
-        arr2 = sorted(arr2)
+        arr2 = sorted(list(set(arr2)))
 
-        @cache
+        cache = {}
+
         def dp(i, j, prevVal):
             if i == len(arr1):
                 return 0
+
+            if (i, prevVal) in cache:
+                return cache[(i, prevVal)]
 
             while j < len(arr2) and prevVal >= arr2[j]:
                 j += 1
                 # j is bigger than previous or out of bounds
 
-            result = float(inf)
+            result = inf
 
             if prevVal < arr1[i]:
                 result = dp(i + 1, j, arr1[i])
@@ -54,10 +57,11 @@ class Solution:
             if j < len(arr2):
                 result = min(result, 1 + dp(i + 1, j, arr2[j]))
 
+            cache[(i, prevVal)] = result
             return result
 
         result = dp(0, 0, float(-inf))
-        return -1 if result == float(inf) else result
+        return -1 if result == inf else result
 
 
 sol = Solution()
