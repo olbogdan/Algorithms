@@ -60,7 +60,7 @@ class Solution:
 
 
 sol = Solution()
-sol.kSmallestPairs([1,1,2], [1,2,3], 2) == [[1,1],[1,1]]
+assert sol.kSmallestPairs([1,1,2], [1,2,3], 2) == [[1,1],[1,1]]
 
 
 class Solution2:
@@ -83,4 +83,4 @@ class Solution2:
 
 
 sol = Solution2()
-sol.kSmallestPairs([1,1,2], [1,2,3], 2) == [[1,1],[1,1]]
+assert sol.kSmallestPairs([1,1,2], [1,2,3], 2) == [[1,1],[1,1]]
