@@ -39,6 +39,8 @@
 # 1 <= ri <= row
 # 1 <= ci <= col
 # All the values of cells are unique.
+import collections
+from typing import List
 
 
 class Solution:
@@ -72,7 +74,7 @@ class Solution:
                 return True
             for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                 nr, nc = r + dr, c + dc
-                if 0 <= nr < row and 0 <= nc < col and grid[nr][nc] == 0:
+                if row > nr >= 0 == grid[nr][nc] and 0 <= nc < col:
                     grid[nr][nc] = -1
                     queue.append((nr, nc))
 
