@@ -33,16 +33,16 @@ Constraints:
 class `168 Excel Sheet Column Title` {
 
     fun convertToTitle(columnNumber: Int): String {
-        var result = ""
+        val result = StringBuilder()
         var number = columnNumber
 
         while (number > 0) {
             number--
             val rem = number % 26
-            result += ('A' + rem).toChar()
+            result.append(('A' + rem).toChar())
             number /= 26
         }
 
-        return result.reversed()
+        return result.reverse().toString()
     }
 }
