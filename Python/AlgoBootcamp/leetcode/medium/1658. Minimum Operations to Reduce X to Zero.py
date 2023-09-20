@@ -67,3 +67,5 @@ res = sol.minOperations([5,6,7,8,9], 4)
 assert res == -1
 res = sol.minOperations([8576], 8576)
 assert res == 1
+res = sol.minOperations([8575], 8576)
+assert res == -1
