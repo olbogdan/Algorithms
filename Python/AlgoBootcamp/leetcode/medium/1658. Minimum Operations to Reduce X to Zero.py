@@ -63,3 +63,5 @@ class Solution:
 sol = Solution()
 res = sol.minOperations([1,1,4,2,3], 5)
 assert res == 2
+res = sol.minOperations([5,6,7,8,9], 4)
+assert res == -1
