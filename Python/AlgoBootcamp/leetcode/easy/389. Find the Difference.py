@@ -33,3 +33,6 @@ class Solution:
                 result -= ord(s[i])
         return chr(result)
 
+
+sol = Solution()
+assert sol.findTheDifference("abcd", "abcde") == "e"
