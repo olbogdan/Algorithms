@@ -29,5 +29,18 @@ assert removeDuplicateLetters("bbcaac") == "bac"
 assert removeDuplicateLetters("edebbed") == "bed"
 
 
+class Solution2:
+    def smallestSubsequence(self, s: str) -> str:
 
-
+        count = Counter(s)
+        result = []
+        for char in s:
+            count[char] -= 1
+            if char not in result:
+                while result and char < result[-1] and count[result[-1]] > 0:
+                    result.pop()
+                result.append(char)
+        return "".join(result)
+sol = Solution2()
+res = sol.smallestSubsequence("cbaacabcaaccaacababa")
+assert res == "abc"
