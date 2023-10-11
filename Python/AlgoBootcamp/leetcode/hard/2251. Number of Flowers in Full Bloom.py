@@ -28,13 +28,14 @@
 # 1 <= persons.length <= 5 * 104
 # 1 <= persons[i] <= 109
 from collections import defaultdict
+from heapq import heapify, heappop, heappush
 from typing import List
 
 
 class Solution:
     def fullBloomFlowers(self, flowers: List[List[int]], persons: List[int]) -> List[int]:
         # build a sparsearray
-        # sort persons by keepeing original index
+        # sort persons by keeping original index
         # compute a prefix sum of sparsearray
         # add answers to res on the fly
         spr = defaultdict(int)
@@ -60,5 +61,35 @@ class Solution:
 
 
 sol = Solution()
+res = sol.fullBloomFlowers([[1,10],[3,3]], [3])
+assert res == [2]
+
+
+class Solution2:
+    def fullBloomFlowers(self, flowers: List[List[int]], people: List[int]) -> List[int]:
+        queries = []
+        for idx, p in enumerate(people):
+            queries.append((p, idx))
+        queries.sort()
+
+        hStart = flowers.copy()
+        heapify(hStart)
+        # hEnd = []
+
+        result = [0] * len(people)
+        inBloom = []
+        for day, originIdx in queries:
+            # activated bloom
+            while hStart and hStart[0][0] <= day:
+                start, end = heappop(hStart)
+                heappush(inBloom, end)
+            # if bloom finished before current date
+            while inBloom and inBloom[0] < day:
+                heappop(inBloom)
+            result[originIdx] = len(inBloom)
+        return result
+
+
+sol = Solution2()
 res = sol.fullBloomFlowers([[1,10],[3,3]], [3])
 assert res == [2]
