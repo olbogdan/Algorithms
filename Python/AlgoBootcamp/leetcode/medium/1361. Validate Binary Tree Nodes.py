@@ -28,6 +28,7 @@
 # n == leftChild.length == rightChild.length
 # 1 <= n <= 104
 # -1 <= leftChild[i], rightChild[i] <= n - 1
+from typing import List
 
 
 class Solution:
@@ -39,7 +40,7 @@ class Solution:
 
         root = None
         for i in range(n):
-            # find any node witout parents
+            # find any node without parents
             if i not in presentedNodes:
                 root = i
                 break
@@ -47,7 +48,7 @@ class Solution:
         visited = set()
 
         def dfs(i):
-            # leaf with no childs, reached the end
+            # leaf with no child, reached the end
             if i == -1:
                 return True
             # cycle
