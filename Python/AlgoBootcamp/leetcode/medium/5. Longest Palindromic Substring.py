@@ -16,6 +16,34 @@
 
 class Solution:
     def longestPalindrome(self, s: str) -> str:
+        longest = 1
+        L = 0
+        R = 0
+        def findLongest(l, r):
+            nonlocal longest
+            nonlocal L
+            nonlocal R
+            while l >=0 and r < len(s) and s[l] == s[r]:
+                l -= 1
+                r += 1
+            if r - l > longest:
+                longest = r - l
+                L = l+1
+                R = r-1
+        for i in range(len(s)):
+            findLongest(i, i)
+            findLongest(i, i+1)
+        return s[L:R+1]
+
+
+sol = Solution()
+assert sol.longestPalindrome("aacabdkacaa") == "aca"
+assert sol.longestPalindrome("cbbd") == "bb"
+assert sol.longestPalindrome("a") == "a"
+
+
+class Solution3:
+    def longestPalindrome(self, s: str) -> str:
         if len(s) < 2:
             return s
 
@@ -36,7 +64,7 @@ class Solution:
         return s[left:right + 1]
 
 
-sol = Solution()
+sol = Solution3()
 assert sol.longestPalindrome("aacabdkacaa") == "aca"
 assert sol.longestPalindrome("cbbd") == "bb"
 assert sol.longestPalindrome("a") == "a"
