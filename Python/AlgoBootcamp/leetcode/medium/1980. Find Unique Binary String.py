@@ -26,6 +26,7 @@
 # nums[i].length == n
 # nums[i] is either '0' or '1'.
 # All the strings of nums are unique.
+from typing import List
 
 
 class Solution:
@@ -38,6 +39,10 @@ class Solution:
             else:
                 ans.append('1')
         return "".join(ans)
+
+
+sol = Solution()
+assert sol.findDifferentBinaryString(["00","01"]) == "10"
 
 
 class Solution2:
@@ -65,3 +70,7 @@ class Solution2:
 
         dp()
         return "".join(candidate)
+
+
+sol = Solution2()
+assert sol.findDifferentBinaryString(["00","01"]) == "10"
