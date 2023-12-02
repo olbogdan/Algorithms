@@ -27,17 +27,36 @@
 from collections import Counter
 from typing import List
 
-class Solution0:
+
+class Solution:
     def countCharacters(self, words: List[str], chars: str) -> int:
-        return sum(len(word) if Counter(word) <= Counter(chars) else 0 for word in words)
+        count = Counter(chars)
+
+        def isGood(word: str):
+            if len(word) > len(chars):
+                return False
+
+            localCount = {}
+            for c in word:
+                localCount[c] = localCount.get(c, 0) + 1
+                if localCount[c] > count.get(c, 0):
+                    return False
+
+            return True
+
+        result = 0
+        for w in words:
+            if isGood(w):
+                result += len(w)
+        return result
 
 
-sol = Solution0()
+sol = Solution()
 assert sol.countCharacters(["cat","bt","hat","tree"], "atach") == 6
 assert sol.countCharacters(["hello","world","leetcode"], "welldonehoneyr") == 10
 
 
-class Solution:
+class Solution1:
     def countCharacters(self, words: List[str], chars: str) -> int:
 
         result = 0
@@ -56,7 +75,7 @@ class Solution:
         return result
 
 
-sol = Solution()
+sol = Solution1()
 assert sol.countCharacters(["cat","bt","hat","tree"], "atach") == 6
 assert sol.countCharacters(["hello","world","leetcode"], "welldonehoneyr") == 10
 
