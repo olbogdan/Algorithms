@@ -69,3 +69,33 @@ obj = RandomizedSet()
 param_1 = obj.insert(1)
 param_2 = obj.remove(1)
 param_3 = obj.getRandom()
+
+
+class RandomizedSet:
+
+    def __init__(self):
+        self.map = {}  # [val, idx]
+        self.arr = []
+
+    def insert(self, val: int) -> bool:
+        if val in self.map:
+            return False
+        self.arr.append(val)
+        self.map[val] = len(self.arr) - 1
+        return True
+
+    def remove(self, val: int) -> bool:
+        if val not in self.map:
+            return False
+        idx = self.map[val]
+        del self.map[val]
+        if len(self.arr) == 1 or len(self.arr) - 1 == idx:
+            self.arr.pop()
+        else:
+            self.arr[idx] = self.arr.pop()
+            self.map[self.arr[idx]] = idx
+        return True
+
+    def getRandom(self) -> int:
+        idx = random.randrange(len(self.arr))
+        return self.arr[idx]
