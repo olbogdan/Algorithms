@@ -24,6 +24,23 @@
 
 class Solution:
     def climbStairs(self, n: int) -> int:
+        if n <= 2:
+            return n
+        first, second = 1, 2
+        for _ in range(n - 2):
+            first, second = second, first + second
+        return second
+
+
+sol = Solution()
+assert sol.climbStairs(3) == 3
+assert sol.climbStairs(4) == 5
+assert sol.climbStairs(10) == 89
+assert sol.climbStairs(1) == 1
+
+
+class Solution2:
+    def climbStairs(self, n: int) -> int:
         cur = 1
         prev = 1
         for i in range(n-1):
@@ -33,7 +50,7 @@ class Solution:
         return cur
 
 
-sol = Solution()
+sol = Solution2()
 assert sol.climbStairs(3) == 3
 assert sol.climbStairs(4) == 5
 assert sol.climbStairs(10) == 89
