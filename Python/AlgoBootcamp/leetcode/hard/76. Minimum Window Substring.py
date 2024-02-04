@@ -19,6 +19,9 @@
 # Output: ""
 # Explanation: Both 'a's from t must be included in the window.
 # Since the largest window of s only has one 'a', return empty string.
+from cmath import inf
+from collections import Counter, defaultdict
+
 
 def minWindow(s: str, t: str) -> str:
     # s = "ADOBECODEBANC", t = "ABC"
@@ -58,3 +61,38 @@ def minWindow(s: str, t: str) -> str:
 assert minWindow("ADOBECODEBANC","ABC") == "BANC"
 assert minWindow("cabwefgewcwaefgcf", "cae") == "cwae"
 assert minWindow("cabwefgewcwaefgcf", "x") == ""
+
+
+class Solution2:
+    def minWindow(self, s: str, t: str) -> str:
+        if len(s) < len(t):
+            return ""
+        # use sliding window and a (counter or mask)
+        mask1 = Counter(t)
+        window = defaultdict(int)  # {char:count}
+
+        def containAll():
+            for char, count in mask1.items():
+                if char not in window or window[char] < count:
+                    return False
+            return True
+
+        l = r = 0
+        shortest = float(inf)
+        candidate = ""
+        while r <= len(s):
+            if not containAll():
+                if r == len(s):
+                    break
+                window[s[r]] += 1
+                r += 1
+                continue
+            if (r - l) < shortest:
+                shortest = r - l
+                candidate = s[l:r]
+            window[s[l]] -= 1
+            l += 1
+        return candidate
+
+
+assert Solution2().minWindow("ADOBECODEBANC","ABC") == "BANC"
