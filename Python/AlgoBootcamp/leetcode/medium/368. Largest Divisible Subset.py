@@ -53,3 +53,22 @@ class Solution:
 
 sol = Solution()
 assert sol.largestDivisibleSubset([1,2,3]) == [2,1]
+
+
+class Solution2:
+    def largestDivisibleSubset(self, nums: List[int]) -> List[int]:
+        nums.sort()
+        N = len(nums)
+        dp = [[n] for n in nums]
+        longest = []
+        for i in range(N - 1, -1, -1):
+            for j in range(i + 1, N):
+                if nums[j] % nums[i] == 0 and len(dp[j]) + 1 > len(dp[i]):
+                    dp[i] = [nums[i]] + dp[j]
+            if len(dp[i]) > len(longest):
+                longest = dp[i]
+        return longest
+
+
+sol = Solution2()
+assert sol.largestDivisibleSubset([1,2,3]) == [1,2]
