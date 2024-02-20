@@ -65,3 +65,35 @@ class Solution:
 sol = Solution()
 assert sol.firstMissingPositive([3,4,-1,1]) == 2
 assert sol.firstMissingPositive([7,8,9,11,12]) == 1
+
+
+class Solution2:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        end = self.movePositiveToTheBeginigng(nums)
+
+        # sub array contains only values 1 .. positive
+        # ignore values that greater then end
+        # reuse cells by setting them negative to indicate the value was found
+        for i in range(end):
+            value = abs(nums[i])
+            if value - 1 < end:
+                if nums[i - 1] > 0:  # nums[i - 1] used as cache
+                    nums[i - 1] = -nums[i - 1]
+        for i in range(end):
+            if nums[i] > 0:
+                return i + 1
+        return end + 1
+
+    # returns pivot, shows begining of 0 or negative partition
+    def movePositiveToTheBeginigng(self, nums) -> int:
+        slow = 0
+        for fast in range(len(nums)):
+            if nums[fast] > 0:
+                nums[slow], nums[fast] = nums[fast], nums[slow]
+                slow += 1
+        return slow
+
+
+sol = Solution2()
+assert sol.firstMissingPositive([3,4,-1,1]) == 2
+# assert sol.firstMissingPositive([7,8,9,11,12]) == 1
