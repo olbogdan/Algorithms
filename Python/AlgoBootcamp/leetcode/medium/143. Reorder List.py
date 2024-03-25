@@ -48,3 +48,60 @@ assert head.val == 1
 assert head.next.val == 4
 assert head.next.next.val == 2
 assert head.next.next.next.val == 3
+
+
+class Solution2:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        prev = None
+        slow = head
+        fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            prev = slow
+            slow = slow.next
+        # if odd
+        if fast:
+            prev = slow
+            slow = slow.next
+
+        # detach first half from second
+        prev.next = None
+
+        # revert second half
+        secondHalf = self.getReverted(slow)
+
+        self.mergeHalfs(head, secondHalf)
+
+    def mergeHalfs(self, first, second):
+        while first:
+            tempFirst = first.next
+            tempSecond = None
+            if second:
+                tempSecond = second.next
+            first.next = second
+            if second:
+                second.next = tempFirst
+            first = tempFirst
+            second = tempSecond
+
+    def getReverted(self, node: Optional[ListNode]) -> Optional[ListNode]:
+        prev = None
+        cur = node
+        while cur:
+            temp = cur.next
+            cur.next = prev
+            prev = cur
+            cur = temp
+        return prev
+
+
+sol = Solution2()
+head = ListNode(1, ListNode(2, ListNode(3, ListNode(4))))
+sol.reorderList(head)
+assert head.val == 1
+assert head.next.val == 4
+assert head.next.next.val == 2
+assert head.next.next.next.val == 3
