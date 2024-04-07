@@ -62,3 +62,31 @@ assert sol.checkValidString("(*))") is True
 assert sol.checkValidString("(*))(") is False
 assert sol.checkValidString("(**") is True
 assert sol.checkValidString("***(((") is False
+
+
+class Solution:
+    def checkValidString(self, s: str) -> bool:
+        opn = 0
+        # opn >= cls !
+        for i in range(len(s)):
+            if s[i] == ')':
+                opn -= 1
+                if opn < 0:
+                    return False
+            else:
+                opn += 1
+        cls = 0
+        for i in range(len(s) - 1, -1, -1):
+            if s[i] == '(':
+                cls -= 1
+                if cls < 0:
+                    return False
+            else:
+                cls += 1
+        return True
+
+
+sol = Solution()
+assert sol.checkValidString("(*))(") is False
+assert sol.checkValidString("(**") is True
+assert sol.checkValidString("***(((") is False
