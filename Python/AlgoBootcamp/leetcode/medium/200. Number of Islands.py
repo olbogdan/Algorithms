@@ -33,37 +33,22 @@ from typing import List
 
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        rows = len(grid)
-        columns = len(grid[0])
-        visited = set()
-
-        def dfs(x, y):
-            if (x < 0
-                    or y < 0
-                    or x > rows - 1
-                    or y > columns - 1
-                    or (x, y) in visited
-                    or grid[x][y] == "0"
-            ):
-                return
-            visited.add((x, y))
-            dfs(x - 1, y)
-            dfs(x + 1, y)
-            dfs(x, y - 1)
-            dfs(x, y + 1)
-
-        def toggleVisitedIsland():
-            for x, y in visited:
-                grid[x][y] = "0"
-            visited.clear()
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        def dfs(r, c):
+            if (min(r, c) >= 0
+            and r < len(grid)
+            and c < len(grid[0])
+            and grid[r][c] == '1'):
+                grid[r][c] = None
+                for shftR, shftC in directions:
+                    dfs(r + shftR, c + shftC)
 
         result = 0
-        for x in range(rows):
-            for y in range(columns):
-                if grid[x][y] == "1":
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c] == '1':
                     result += 1
-                    dfs(x, y)
-                    toggleVisitedIsland()
+                    dfs(r, c)
         return result
 
 
