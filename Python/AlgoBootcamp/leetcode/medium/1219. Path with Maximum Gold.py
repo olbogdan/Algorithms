@@ -1,0 +1,87 @@
+# In a gold mine grid of size m x n, each cell in this mine has an integer representing the amount of gold in that cell, 0 if it is empty.
+#
+# Return the maximum amount of gold you can collect under the conditions:
+#
+# Every time you are located in a cell you will collect all the gold in that cell.
+# From your position, you can walk one step to the left, right, up, or down.
+# You can't visit the same cell more than once.
+# Never visit a cell with 0 gold.
+# You can start and stop collecting gold from any position in the grid that has some gold.
+#
+#
+# Example 1:
+#
+# Input: grid = [[0,6,0],[5,8,7],[0,9,0]]
+# Output: 24
+# Explanation:
+# [[0,6,0],
+#  [5,8,7],
+#  [0,9,0]]
+# Path to get the maximum gold, 9 -> 8 -> 7.
+# Example 2:
+#
+# Input: grid = [[1,0,7],[2,0,6],[3,4,5],[0,3,0],[9,0,20]]
+# Output: 28
+# Explanation:
+# [[1,0,7],
+#  [2,0,6],
+#  [3,4,5],
+#  [0,3,0],
+#  [9,0,20]]
+# Path to get the maximum gold, 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7.
+#
+#
+# Constraints:
+#
+# m == grid.length
+# n == grid[i].length
+# 1 <= m, n <= 15
+# 0 <= grid[i][j] <= 100
+# There are at most 25 cells containing gold.
+from typing import List
+
+
+class Solution:
+    def getMaximumGold(self, grid: List[List[int]]) -> int:
+        ROWS = len(grid)
+        COLS = len(grid[0])
+        directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+
+        def countNeighborsWithGold(r, c):
+            nei = 0
+            for rSh, cSh in directions:
+                neiR = r + rSh
+                neiC = c + cSh
+                if min(neiR, neiC) >= 0 and neiR < ROWS and neiC < COLS:
+                    if grid[neiR][neiC] != 0:
+                        nei += 1
+            return nei
+
+        starts = []
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c] != 0:
+                    nei = countNeighborsWithGold(r, c)
+                    if nei < 3:
+                        starts.append((r, c))
+
+        def dfs(r, c, visited):
+            if min(r, c) < 0 or r >= ROWS or c >= COLS or grid[r][c] == 0 or (r, c) in visited:
+                return 0
+            res = grid[r][c]
+            visited.add((r, c))
+            temp = 0
+            for rSh, cSh in directions:
+                temp = max(temp, dfs(rSh + r, cSh + c, visited))
+            visited.remove((r, c))
+            return res + temp
+
+        result = 0
+        for r, c in starts:
+            visited = set()
+            result = max(result, dfs(r, c, visited))
+        return result
+
+
+sol = Solution()
+assert sol.getMaximumGold([[0, 6, 0], [5, 8, 7], [0, 9, 0]]) == 24
