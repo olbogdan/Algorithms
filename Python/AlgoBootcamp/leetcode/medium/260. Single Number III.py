@@ -28,17 +28,25 @@ from typing import List
 
 
 class Solution:
-    def countTriplets(self, arr: List[int]) -> int:
-        count = 0
-        for i in range(len(arr)):
-            xor = arr[i]
-            for j in range(i+1, len(arr)):
-                xor ^= arr[j]
-                if xor == 0:
-                    count += j - i
-        return count
+    def singleNumber(self, nums: List[int]) -> List[int]:
+        mask = 0
+        for n in nums:
+            mask ^= n
+        diff = 1
+        while not mask & diff:
+            diff = diff << 1
+
+        a = 0
+        b = 0
+        for n in nums:
+            if n & diff != 0:
+                a = a ^ n
+            else:
+                b = b ^ n
+
+        return [a, b]
 
 
 sol = Solution()
-assert sol.countTriplets([2, 3, 1, 6, 7]) == 4
-assert sol.countTriplets([1, 1, 1, 1, 1]) == 10
+assert sol.singleNumber([1, 2, 1, 3, 2, 5]) == [3, 5]
+assert sol.singleNumber([-1, 0]) == [-1, 0]
