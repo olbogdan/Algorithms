@@ -40,3 +40,6 @@ class Solution:
         return result
 
 
+sol = Solution()
+assert sol.commonChars(["bella", "label", "roller"]) == ["l", "l", "e"]
+assert sol.commonChars(["cool", "lock", "cook"]) == ["c", "o"]
