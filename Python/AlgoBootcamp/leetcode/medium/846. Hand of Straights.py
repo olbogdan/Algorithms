@@ -54,3 +54,29 @@ sol = Solution()
 assert sol.isNStraightHand([8,10,12], 3) is False
 assert sol.isNStraightHand([1,2,3,4,5], 4) is False
 assert sol.isNStraightHand([1,2,3,6,2,3,4,7,8], 3) is True
+
+
+from collections import Counter
+class Solution:
+    def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
+        if len(hand) % groupSize:
+            return False
+        counter = Counter(hand)
+        hand.sort()
+        for card in hand:
+            if counter[card] == 0:
+                continue
+            while counter[card] > 0:
+                counter[card] -= 1
+                for i in range(1, groupSize):
+                    nextCard = card + i
+                    if counter[nextCard] == 0:
+                        return False
+                    counter[nextCard] -= 1
+        return True
+
+
+sol = Solution()
+assert sol.isNStraightHand([8,10,12], 3) is False
+assert sol.isNStraightHand([1,2,3,4,5], 4) is False
+assert sol.isNStraightHand([1,2,3,6,2,3,4,7,8], 3) is True
