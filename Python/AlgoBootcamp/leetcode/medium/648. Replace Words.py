@@ -27,7 +27,7 @@
 # The length of each word in sentence is in the range [1, 1000]
 # Every two consecutive words in sentence will be separated by exactly one space.
 # sentence does not have leading or trailing spaces.
-from typing import List
+from typing import List, Dict
 
 
 class Solution:
@@ -50,5 +50,56 @@ class Solution:
 
 
 sol = Solution()
+assert sol.replaceWords(["cat", "bat", "rat"], "the cattle was rattled by the battery") == "the cat was rat by the bat"
+assert sol.replaceWords(["a", "b", "c"], "aadsfasf absbs bbab cadsfafs") == "a a b c"
+
+
+class Trie:
+    def __init__(self, end: bool, continuation: Dict[str, 'Trie']):
+        self.end = end
+        self.continuation = continuation
+
+
+class Solution2:
+    def replaceWords(self, dictionary: List[str], sentence: str) -> str:
+        trie = self.createTrie(dictionary)
+
+        def getShortVersion(word):
+            level = trie
+            for i in range(len(word)):
+                char = word[i]
+                if char in level:
+                    if level[char].end:
+                        return word[:i + 1]
+                    level = level[char].continuation
+                else:
+                    return word
+
+            return word
+
+        words = sentence.split(" ")
+        resArray = []
+        for w in words:
+            newWord = getShortVersion(w)
+            resArray.append(newWord)
+
+        return " ".join(resArray)
+
+    def createTrie(self, dictionary: List[str]) -> Dict[str, Trie]:
+        trie = {}
+        for word in dictionary:
+            level = trie
+            for i in range(len(word)):
+                char = word[i]
+                if char not in level:
+                    level[char] = Trie(False, {})
+
+                if i == len(word) - 1:
+                    level[char].end = True
+                level = level[char].continuation
+        return trie
+
+
+sol = Solution2()
 assert sol.replaceWords(["cat", "bat", "rat"], "the cattle was rattled by the battery") == "the cat was rat by the bat"
 assert sol.replaceWords(["a", "b", "c"], "aadsfasf absbs bbab cadsfafs") == "a a b c"
