@@ -53,3 +53,33 @@ sol = Solution()
 arr = [2,0,2,1,1,0]
 sol.sortColors(arr)
 assert arr == [0,0,1,1,2,2]
+
+
+class Solution2:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+
+        def swap(i1, i2):
+            nums[i1], nums[i2] = nums[i2], nums[i1]
+
+        N = len(nums)
+        l = 0
+        r = N - 1
+        i = 0
+        while i <= r:
+            if nums[i] == 0:
+                swap(l, i)
+                i += 1
+                l += 1
+            if nums[i] == 2:
+                swap(r, i)
+                r -= 1
+            else:
+                i += 1
+
+
+sol = Solution2()
+arr = [2, 0, 1]
+sol.sortColors(arr)
