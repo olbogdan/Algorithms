@@ -42,3 +42,27 @@ class Solution:
 
 sol = Solution()
 assert sol.majorityElement([2,2,1,1,1,2,2]) == 2
+
+
+class Count:
+    def __init__(self, num, repeat):
+        self.num = num
+        self.repeat = repeat
+
+
+class Solution2:
+    def majorityElement(self, nums: List[int]) -> int:
+        counter = Count(nums[0], 1)
+        for i in range(1, len(nums)):
+            if counter.num == nums[i]:
+                counter.repeat += 1
+            else:
+                counter.repeat -= 1
+
+                if counter.repeat == 0:
+                    counter = Count(nums[i], 1)
+        return counter.num
+
+
+sol = Solution2()
+assert sol.majorityElement([2,2,1,1,1,2,2]) == 2
