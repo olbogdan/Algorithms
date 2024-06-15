@@ -40,6 +40,34 @@ from typing import List
 
 class Solution:
     def findMaximizedCapital(self, k: int, w: int, profits: List[int], capital: List[int]) -> int:
+        projectCosts = []
+        for i in range(len(capital)):
+            projectCosts.append((capital[i], i))
+        heapify(projectCosts)
+
+        availableProjects = []
+
+        def updateAvailability():
+            while projectCosts and projectCosts[0][0] <= w: # mistakes: don't forget that it is 2 dimen array
+                _, i = heappop(projectCosts)
+                heappush(availableProjects, -profits[i])
+
+        updateAvailability() # mistakes: don't forget to call before interation
+        while availableProjects and k > 0: # mistakes: don't forget check if array is not empty
+            w += (-heappop(availableProjects))
+            updateAvailability()
+            k -= 1
+
+        return w
+
+
+sol = Solution()
+assert sol.findMaximizedCapital(1, 0, [1,2,3], [1,1,2]) == 0
+assert sol.findMaximizedCapital(3, 0, [1,2,3], [0,1,2]) == 6
+
+
+class Solution2:
+    def findMaximizedCapital(self, k: int, w: int, profits: List[int], capital: List[int]) -> int:
         maxHeap = []
         # heapify sort based on capital price, cheaper tasks at the begining
         # (0{price}, 3{earn if take it}), (3, 5), (4, 22)
@@ -60,6 +88,6 @@ class Solution:
         return w
 
 
-sol = Solution()
+sol = Solution2()
 assert sol.findMaximizedCapital(1, 0, [1,2,3], [1,1,2]) == 0
 assert sol.findMaximizedCapital(3, 0, [1,2,3], [0,1,2]) == 6
