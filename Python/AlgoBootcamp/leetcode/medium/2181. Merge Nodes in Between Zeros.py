@@ -60,3 +60,26 @@ class Solution:
                 temp += head.val
             head = head.next
         return dummy.next
+
+
+class Solution2:
+    def mergeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
+
+        temp = 0
+
+        dummy = ListNode()
+        dummy.next = head.next
+        cur = head
+
+        head = head.next
+        while head:
+            if head.val == 0:
+                cur = cur.next
+                cur.val = temp
+                temp = 0
+            else:
+                temp += head.val
+            head = head.next
+        cur.next = None
+        return dummy.next
+
