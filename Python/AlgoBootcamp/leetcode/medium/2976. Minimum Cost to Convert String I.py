@@ -84,3 +84,38 @@ class Solution:
 sol = Solution()
 assert sol.minimumCost(source="abcd", target="acbe", original=["a", "b", "c", "c", "e", "d"], changed=["b", "c", "b", "e", "b", "e"], cost=[2, 5, 5, 1, 2, 20]) == 28
 assert sol.minimumCost(source="aaaa", target="bbbb", original=["a", "c"], changed=["c", "b"], cost=[1, 2]) == 12
+
+
+class Solution2:
+    def minimumCost(self, source: str, target: str, original: List[str], changed: List[str], cost: List[int]) -> int:
+        adj = defaultdict(list)
+        for fr, to, c in zip(original, changed, cost):
+            adj[fr].append((c, to))  # (cost : toNode)
+
+        def djikstra(node):
+            localPath = {}
+            h = [(0, node)]
+            while h:
+                cost, node = heappop(h)
+                if node in localPath:
+                    continue
+                localPath[node] = cost
+                for nextCost, nei in adj[node]:
+                    heappush(h, (cost + nextCost, nei))
+            return localPath
+
+        pathes = {}
+        for node in set(source):
+            pathes[node] = djikstra(node)
+
+        res = 0
+        for src, tar in zip(source, target):
+            if tar not in pathes[src]:
+                return -1
+            res += pathes[src][tar]
+        return res
+
+
+sol = Solution2()
+assert sol.minimumCost(source="abcd", target="acbe", original=["a", "b", "c", "c", "e", "d"], changed=["b", "c", "b", "e", "b", "e"], cost=[2, 5, 5, 1, 2, 20]) == 28
+assert sol.minimumCost(source="aaaa", target="bbbb", original=["a", "c"], changed=["c", "b"], cost=[1, 2]) == 12
