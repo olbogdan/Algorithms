@@ -44,36 +44,36 @@ class ListNode:
         self.val = val
         self.next = next
 
+
 class Solution:
     def splitListToParts(self, head: Optional[ListNode], k: int) -> List[Optional[ListNode]]:
-
-        # get size
-        cur = head
-        size = 0
-        while cur:
-            size += 1
-            cur = cur.next
-
-        def getNNodes(n) -> Optional[ListNode]:
+        def getSubList(subSize):
             nonlocal head
-            dummyNode = ListNode()
-            temp = dummyNode
-            while head and n > 0:
-                temp.next = head
-                temp = head
+            dummy = ListNode()
+            cur = dummy
+            while head and subSize:
+                subSize -= 1
+                cur.next = head
                 head = head.next
-                temp.next = None
-                n -= 1
-            return dummyNode.next
+                cur = cur.next
+                cur.next = None
+            return dummy.next
 
-        chunkSize = size // k
-        rest = size % k
-        result = []
-        for i in range(k):
-            extra = 0
-            if rest > 0:
-                extra = 1
-                rest -= 1
-            result.append(getNNodes(max(chunkSize + extra, 1)))
+        size = self.getSize(head)
+        reminder = size % k
+        chunk = size // k
+        res = []
+        for _ in range(k):
+            subArraySize = chunk
+            if reminder > 0:
+                reminder -= 1
+                subArraySize += 1
+            res.append(getSubList(subArraySize))
+        return res
 
-        return result
+    def getSize(self, head):
+        i = 0
+        while head is not None:
+            i += 1
+            head = head.next
+        return i
