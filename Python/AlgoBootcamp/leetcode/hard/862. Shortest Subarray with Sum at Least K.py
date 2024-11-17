@@ -24,6 +24,7 @@
 # -105 <= nums[i] <= 105
 # 1 <= k <= 109
 import collections
+import heapq
 from cmath import inf
 from typing import List
 
@@ -74,38 +75,48 @@ from typing import List
 
 class Solution1:
     def shortestSubarray(self, nums: List[int], k: int) -> int:
-        N = len(nums)
-        prefixes = [0] * (N + 1)
-        for i in range(1, N + 1):
-            prefixes[i] = nums[i - 1] + prefixes[i - 1]
-
+        mHeap = []
         res = float(inf)
-        queue = collections.deque()
-        for i in range(len(prefixes)):
-            while queue and prefixes[i] - prefixes[queue[0]] >= k:
-                res = min(res, i - queue.popleft())
+        prefixSum = 0
+        for idx, num in enumerate(nums):
+            prefixSum += num
+            if num >= k:
+                return 1
 
-            while queue and prefixes[i] <= prefixes[queue[-1]]:
-                queue.pop()
-
-            queue.append(i)
+            while mHeap and prefixSum - mHeap[0][0] >= k:
+                _, prevIdx = heapq.heappop(mHeap)
+                res = min(res, idx - prevIdx)
+            if prefixSum >= k:
+                res = min(res, len(mHeap) + 1)
+            heapq.heappush(mHeap, (prefixSum, idx))
         return -1 if res == float(inf) else res
 
 
 sol = Solution1()
-res1 = sol.shortestSubarray([2, -1, 2], 3)
-assert res1 == 3
+assert sol.shortestSubarray([1], 1) == 1
+assert sol.shortestSubarray([1, 2], 4) == -1
+assert sol.shortestSubarray([2, -1, 2], 3) == 3
 
 
-class Solution2:
-    def shortestSubarray(self, nums, k):
-        d = collections.deque([[0, 0]])
-        res, cur = float('inf'), 0
-        for i, a in enumerate(nums):
-            cur += a
-            while d and cur - d[0][1] >= k:
-                res = min(res, i + 1 - d.popleft()[0])
-            while d and cur <= d[-1][1]:
-                d.pop()
-            d.append([i + 1, cur])
-        return res if res < float('inf') else -1
+class Solution:
+    def shortestSubarray(self, nums: List[int], k: int) -> int:
+        q = collections.deque() # (prefSum, idx)
+        # default value, instead of prefixSum >= k: res = min(res, idx+1)
+        q.append([0, -1])
+        res = float(inf)
+        prefixSum = 0
+        for idx, num in enumerate(nums):
+            prefixSum += num
+            while q and prefixSum - q[0][0] >= k:
+                _, prevIdx = q.popleft()
+                res = min(res, idx - prevIdx)
+            while q and q[-1][0] > prefixSum:
+                q.pop()
+            q.append((prefixSum, idx))
+        return -1 if res == float(inf) else res
+
+
+sol = Solution()
+assert sol.shortestSubarray([1], 1) == 1
+assert sol.shortestSubarray([1, 2], 4) == -1
+assert sol.shortestSubarray([2, -1, 2], 3) == 3
