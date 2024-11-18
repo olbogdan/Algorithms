@@ -59,3 +59,35 @@ class Solution:
 sol = Solution()
 assert sol.decrypt([5, 7, 1, 4], 3) == [12, 10, 16, 13]
 assert sol.decrypt([1, 2, 3, 4], 0) == [0, 0, 0, 0]
+
+
+class Solution2:
+    def decrypt(self, code: List[int], k: int) -> List[int]:
+        N = len(code)
+        res = [0] * N
+        if k == 0:
+            return res
+        curSum = 0
+        if k > 0:
+            end = k + 1
+            curSum = sum(code[1:end])
+        else:
+            curSum = sum(code[N-abs(k):N])
+
+        for i in range(N):
+            res[i] = curSum
+            if k > 0:
+                start = (i + 1) % N
+                curSum -= code[start]
+                end = (i + k + 1) % N
+                curSum += code[end]
+            else:
+                start = i - abs(k)
+                curSum -= code[start]
+                curSum += code[i]
+        return res
+
+
+sol = Solution2()
+assert sol.decrypt([5, 7, 1, 4], 3) == [12, 10, 16, 13]
+assert sol.decrypt([2,4,9,3], -2) == [12,5,6,13]
