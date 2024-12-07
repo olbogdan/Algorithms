@@ -61,3 +61,9 @@ class Solution:
                 left = m + 1
 
         return res
+
+
+sol = Solution()
+assert sol.minimumSize([2, 4, 8, 2], 4) == 2
+assert sol.minimumSize([9], 2) == 3
+assert sol.minimumSize([7], 2) == 3
