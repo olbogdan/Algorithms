@@ -1,4 +1,7 @@
 package leetcode.medium
+
+import kotlin.math.pow
+
 /*Given the integers zero, one, low, and high, we can construct a string by starting with an empty string, and then at each step perform either of the following:
 
 Append the character '0' zero times.
@@ -48,5 +51,30 @@ class `2466 Count Ways To Build Good Strings` {
         }
 
         return result % MOD
+    }
+}
+
+class `2466 Count Ways To Build Good Strings2` {
+    fun countGoodStrings(low: Int, high: Int, zero: Int, one: Int): Int {
+        val MOD = 10.0.pow(9.0).toInt() + 7
+        val memo = HashMap<Int, Long>()
+        fun dp(len: Int): Long {
+            if (len > high) {
+                return 0
+            }
+            if (len in memo) {
+                return memo.getOrDefault(len, Long.MAX_VALUE)
+            }
+            var res = 0L
+            if (len >= low) {
+                res++
+            }
+            res += dp(len+zero)
+            res += dp(len+one)
+            res = res % MOD
+            memo[len] = res
+            return res
+        }
+        return (dp(0) % MOD).toInt()
     }
 }
