@@ -67,3 +67,27 @@ res = sol.countPalindromicSubsequence("abc")
 assert res == 0
 res = sol.countPalindromicSubsequence("abca")
 assert res == 2
+
+
+class Solution2:
+    def countPalindromicSubsequence(self, s: str) -> int:
+        right = {}
+        for i in reversed(range(len(s))):
+            if s[i] not in right:
+                right[s[i]] = i
+        left = set()
+        res = set()
+        for i in range(len(s)):
+            if s[i] in right.keys() and right[s[i]] == i:
+                del right[s[i]]
+            for ch in left:
+                if ch in left and ch in right.keys():
+                    res.add(ch + s[i])
+            left.add(s[i])
+        return len(res)
+
+
+sol = Solution2()
+assert sol.countPalindromicSubsequence("bbcbaba") == 4
+assert sol.countPalindromicSubsequence("adc") == 0
+assert sol.countPalindromicSubsequence("aabca") == 3
