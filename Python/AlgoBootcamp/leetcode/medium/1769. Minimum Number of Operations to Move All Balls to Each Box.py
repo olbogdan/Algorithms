@@ -58,5 +58,5 @@ class Solution:
 
 
 sol = Solution()
-# assert sol.minOperations("110") == [1, 1, 3]
+assert sol.minOperations("110") == [1, 1, 3]
 assert sol.minOperations("001011") == [11,8,5,4,3,4]
