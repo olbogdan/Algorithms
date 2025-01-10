@@ -1,4 +1,4 @@
-package leetcode.medium.`1422`
+package leetcode.medium
 
 import kotlin.math.max
 
@@ -37,7 +37,7 @@ import kotlin.math.max
  * The string s consists of characters '0' and '1' only.
  */
 
-class ` Maximum Score After Splitting a String` {
+class `1422 Maximum Score After Splitting a String` {
     fun maxScore(s: String): Int {
         var right = s.count { it == '1'}
         var left = 0
