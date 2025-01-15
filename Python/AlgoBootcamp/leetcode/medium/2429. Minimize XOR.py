@@ -32,7 +32,7 @@
 
 
 class Solution:
-    def minimizeXor(self, num1: int, num2: int) -> int:
+    def minimizeXor(self, mask: int, num2: int) -> int:
         def countBits(num) -> int:
             bit = 0
             while num != 0:
@@ -40,29 +40,25 @@ class Solution:
                     bit+=1
                 num = num >> 1
             return bit
-
-        bits = countBits(num1)
+        bits = countBits(mask)
         targetBits = countBits(num2)
 
-        mask = num1
-        if bits > targetBits:
-            i = 0
-            while bits > targetBits:
-                if 1 << i & mask:
-                    bits -= 1
-                    mask = mask ^ 1 << i
-                i += 1
-            return mask
-        else:
-            i = 0
-            while bits < targetBits:
-                if 1 << i & mask == 0:
-                    bits += 1
-                    mask = mask | 1 << i
-                i += 1
-            return mask
-        return -1
+        i = 0
+        while bits > targetBits:
+            if 1 << i & mask:
+                bits -= 1
+                mask = mask ^ 1 << i
+            i += 1
+
+        while bits < targetBits:
+            if 1 << i & mask == 0:
+                bits += 1
+                mask = mask | 1 << i
+            i += 1
+        return mask
 
 
 sol = Solution()
 assert sol.minimizeXor(3, 5) == 3
+assert sol.minimizeXor(1, 12) == 3
+assert sol.minimizeXor(1, 1) == 1
