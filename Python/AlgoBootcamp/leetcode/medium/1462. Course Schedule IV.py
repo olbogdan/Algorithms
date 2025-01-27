@@ -45,34 +45,37 @@ from typing import List
 
 
 class Solution:
-    def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
-        # fill in an adj map by course -> prereq
+    def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[
+        bool]:
         adj = defaultdict(list)
-        for prereq, course in prerequisites:
-            adj[course].append(prereq)
+        for a, b in prerequisites:
+            adj[a].append(b)
 
-        indirectDict = defaultdict(set)
-        def dfs(n):
-            if n in indirectDict:
-                return indirectDict[n]
-            # collect all prereq of N course
-            for p in adj[n]:
-                indirectDict[n] |= dfs(p) # union of sets
+        # compress adj to a form { node : set of all children }
+        adjSet = defaultdict(set)
 
-            indirectDict[n].add(n)
-            return indirectDict[n]
+        def compress(node):
+            if node in adjSet:
+                return adjSet[node]
+            curChilds = set()
+            for directChild in adj[node]:
+                curChilds.add(directChild)
+                # add children of child
+                for childOfChild in compress(directChild):
+                    curChilds.add(childOfChild)
+            adjSet[node] = curChilds
+            return curChilds
 
-        # fill in an indirected map by cource -> {indirected courses}
-        # calculate all prereq for course i reqursively
-        for n in range(numCourses):
-            dfs(n)
+        for i in range(numCourses):
+            compress(i)
 
-        # iterate on all queries, for each query i check if it's prereq in the indirected map[i]
-        result = [False]*len(queries)
-        for i in range(len(queries)):
-            prereq, course = queries[i]
-            result[i] = prereq in indirectDict[course]
-        return result
+        res = []
+        for a, b in queries:
+            if b in adjSet[a]:
+                res.append(True)
+            else:
+                res.append(False)
+        return res
 
 
 sol = Solution()
