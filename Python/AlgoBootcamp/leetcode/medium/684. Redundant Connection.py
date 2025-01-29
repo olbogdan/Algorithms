@@ -33,33 +33,28 @@ from typing import List
 
 class Solution:
     def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
-        adjList = defaultdict(list)
-        visited = set()
+        N = len(edges)
+        group = [i for i in range(N + 1)]
 
-        def isPathBetweenExist(source, target):
-            if source in visited:
-                return False
-            if source == target:
-                return True
+        def find(n):
+            if n == group[n]:
+                return n
+            else:
+                root = find(group[n])
+                group[n] = root
+                return root
 
-            visited.add(source)
-            if source in adjList:
-                for node in adjList[source]:
-                    if isPathBetweenExist(node, target):
-                        return True
-            return False
+        def join(a, b):
+            rootA = find(a)
+            rootB = find(b)
+            group[rootA] = group[rootB]
 
         for a, b in edges:
-            if isPathBetweenExist(a, b):
+            if find(a) == find(b):
                 return [a, b]
-            adjList[a].append(b)
-            adjList[b].append(a)
-            visited.clear()
+            join(a, b)
 
-        # Percondition tree with cycle X - P(child/neighbor) - Y(child/neighbor)
-        # lets say we are inserting a new node X - Y
-        # dfs(source(X), destination(Y)) do dfs on X to check all its nei/child
-        # if X already has some connection to Y
+
 sol = Solution()
 res = sol.findRedundantConnection([[1,2],[1,3],[2,3]])
 assert res == [2,3]
