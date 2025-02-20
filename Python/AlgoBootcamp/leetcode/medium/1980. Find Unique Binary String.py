@@ -44,32 +44,24 @@ class Solution:
 sol = Solution()
 assert sol.findDifferentBinaryString(["00","01"]) == "10"
 
-
 class Solution2:
     def findDifferentBinaryString(self, nums: List[str]) -> str:
-        numsSet = set(nums)
-        n = len(nums[0])
-        candidate = []
-
-        def dp():
-            if len(candidate) == n:
-                if "".join(candidate) not in numsSet:
-                    return True
-                else:
-                    return False
-            candidate.append("0")
-            if dp():
+        used = set(nums)
+        res = []
+        def backtrack():
+            if len(res) == len(nums):
+                return "".join(res) not in used
+            res.append('0')
+            if backtrack():
                 return True
-
-            candidate.pop()
-            candidate.append("1")
-            if dp():
+            res.pop()
+            res.append('1')
+            if backtrack():
                 return True
-            candidate.pop()
+            res.pop()
             return False
-
-        dp()
-        return "".join(candidate)
+        backtrack()
+        return "".join(res)
 
 
 sol = Solution2()
