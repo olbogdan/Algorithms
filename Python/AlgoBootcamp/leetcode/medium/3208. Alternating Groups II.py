@@ -55,6 +55,7 @@
 # 3 <= colors.length <= 105
 # 0 <= colors[i] <= 1
 # 3 <= k <= colors.length
+from typing import List
 
 
 class Solution:
@@ -72,3 +73,6 @@ class Solution:
         return res
 
 
+sol = Solution()
+assert sol.numberOfAlternatingGroups([0, 1, 0, 1, 0], 3) == 3
+assert sol.numberOfAlternatingGroups([0, 1, 0, 0, 1, 0, 1], 6) == 2
