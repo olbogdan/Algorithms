@@ -24,57 +24,26 @@
 #
 # 1 <= s.length <= 500
 # s consists of lowercase English letters.
-from collections import Counter
 from typing import List
 
 
 class Solution:
     def partitionLabels(self, s: str) -> List[int]:
-        count = Counter(s)
-        debt = set()
-        result = []
-        size = 0
-        for i in range(len(s)):
-            char = s[i]
-            size += 1
-            count[char] -= 1
-            if count[char] > 0:
-                debt.add(char)
-            else:
-                if char in debt:
-                    debt.remove(char)
-                if not debt:
-                    result.append(size)
-                    size = 0
-        return result
+        N = len(s)
+        charToEnd = {}
+        for i in range(N):
+            charToEnd[s[i]] = i
+        res = []
+        start = 0
+        end = 0
+        for i in range(N):
+            end = max(end, charToEnd[s[i]])
+            if i == end:
+                res.append(end - start + 1)
+                start = end + 1
+        return res
 
 
 sol = Solution()
-assert sol.partitionLabels("ababcbacadefegdehijhklij") == [9,7,8]
-assert sol.partitionLabels("eccbbbbdec") == [10]
-
-
-class Solution2:
-    def partitionLabels(self, s: str) -> List[int]:
-        lastIdx = {}
-        for i in range(len(s)):
-            char = s[i]
-            lastIdx[char] = i
-
-        end = 0
-        size = 0
-        result = []
-        for i in range(len(s)):
-            size += 1
-            char = s[i]
-            end = max(end, lastIdx[char])
-            if end == i:
-                result.append(size)
-                size = 0
-
-        return result
-
-
-sol = Solution2()
 assert sol.partitionLabels("ababcbacadefegdehijhklij") == [9,7,8]
 assert sol.partitionLabels("eccbbbbdec") == [10]
