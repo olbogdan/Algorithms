@@ -49,6 +49,7 @@
 # 1 <= nums.length <= 100
 # 1 <= nums[i] <= 100
 # 1 <= k <= 100
+from typing import List
 
 
 class Solution:
