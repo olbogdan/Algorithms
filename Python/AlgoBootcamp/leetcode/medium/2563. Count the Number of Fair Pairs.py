@@ -30,8 +30,30 @@ from typing import List
 class Solution:
     def countFairPairs(self, nums: List[int], lower: int, upper: int) -> int:
         nums.sort()
+        def pairsLessThen(top):
+            res = 0
+            l, r, = 0, len(nums)-1
+            while l < r:
+                curSum = nums[l] + nums[r]
+                if curSum < top:
+                    res += r - l
+                    l += 1
+                else:
+                    r -= 1
+            return res
+        return pairsLessThen(upper + 1) - pairsLessThen(lower)
+
+
+s = Solution()
+assert s.countFairPairs([0,1,7,4,4,5], 3, 6) == 6
+assert s.countFairPairs([1,7,9,2,5], 11, 11) == 1
+
+
+class Solution2:
+    def countFairPairs(self, nums: List[int], lower: int, upper: int) -> int:
+        nums.sort()
         # this will find if any num in nums + the current i
-        # can give us sutisfactions of the lower border
+        # can give us satisfactions of the lower border
         def findLowerBorder(l, numsToFind):
             r = len(nums) - 1
             res = -1
@@ -82,6 +104,6 @@ class Solution:
         return res
 
 
-s = Solution()
-# assert s.countFairPairs([0,1,7,4,4,5], 3, 6) == 6
+s = Solution2()
+assert s.countFairPairs([0,1,7,4,4,5], 3, 6) == 6
 assert s.countFairPairs([1,7,9,2,5], 11, 11) == 1
