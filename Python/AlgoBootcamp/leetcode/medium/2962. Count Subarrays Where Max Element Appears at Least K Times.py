@@ -29,22 +29,17 @@ from typing import List
 class Solution:
     def countSubarrays(self, nums: List[int], k: int) -> int:
         N = len(nums)
-        totalSubarrays = (N * (N + 1)) // 2
-        # lets count how many subarrays where k appears less then k and substract it from total
-        subarrays = 0
-        maxNumber = max(nums)
-        repeat = 0
-        l = 0
+        maxVal = max(nums)
+        l = count = res = 0
         for r in range(N):
-            if nums[r] == maxNumber:
-                repeat += 1
-            while repeat >= k:
-                if nums[l] == maxNumber:
-                    repeat -= 1
+            if nums[r] == maxVal:
+                count += 1
+            while count >= k:
+                if nums[l] == maxVal:
+                    count -= 1
+                res += N - r
                 l += 1
-            subarrays += r - l + 1
-
-        return totalSubarrays - subarrays
+        return res
 
 
 sol = Solution()
