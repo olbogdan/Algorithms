@@ -43,3 +43,34 @@ class Solution1:
 
 sol = Solution1()
 assert sol.buildArray([5,0,1,2,3,4]) == [4,5,0,1,2,3]
+
+
+class Solution2:
+    def buildArray(self, nums: List[int]) -> List[int]:
+        def dfs(i):
+            if nums[i] < 0:
+                return nums[i]
+            if nums[i] == i:
+                if nums[i] > 0:
+                    nums[i] = -nums[i]
+                else:
+                    nums[i] = float('-inf')
+                return None
+            nextI = nums[i]
+            nums[i] = -nums[i]
+            nums[i] = dfs(nextI)
+            return -nextI
+
+        for i in range(len(nums)):
+            if nums[i] >= 0:
+                dfs(nums[i])
+        for i in range(len(nums)):
+            if nums[i] == float('-inf'):
+                nums[i] = 0
+            if nums[i] < 0:
+                nums[i] = -nums[i]
+        return nums
+
+
+sol = Solution2()
+assert sol.buildArray([5,0,1,2,3,4]) == [4,5,0,1,2,3]
