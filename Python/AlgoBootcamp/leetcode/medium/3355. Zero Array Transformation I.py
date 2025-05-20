@@ -44,6 +44,7 @@
 # 1 <= queries.length <= 105
 # queries[i].length == 2
 # 0 <= li <= ri < nums.length
+from typing import List
 
 
 class Solution:
@@ -60,3 +61,8 @@ class Solution:
             if nums[i] < 0:
                 nums[i] = 0
         return sum(nums) == 0
+
+
+sol = Solution()
+assert sol.isZeroArray([1, 0, 1], [[0, 2]]) == True
+assert sol.isZeroArray([4, 3, 2, 1], [[1, 3], [0, 2]]) == False
