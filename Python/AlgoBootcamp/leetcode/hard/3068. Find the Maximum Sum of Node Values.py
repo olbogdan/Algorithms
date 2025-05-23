@@ -47,21 +47,20 @@
 from typing import List
 
 
-class Solution:
-    def maximumValueSum(self, nums: List[int], k: int, edges: List[List[int]]) -> int:
-        deltas = []
+class Solution(object):
+    def maximumValueSum(self, nums, k, edges):
+        res = cnt = 0
+        leastContribute = float('inf')
         for n in nums:
-            delta = (n ^ k) - n
-            deltas.append(delta)
-        deltas.sort(key=lambda x: -x)
-        res = sum(nums)
-        i = 0
-        while True:
-            if i >= len(deltas) - 1 or deltas[i] + deltas[i + 1] <= 0:
-                break
-            res += deltas[i] + deltas[i + 1]
-            i += 2
-        return res
+            x = n ^ k
+            if x > n:
+                cnt += 1
+                res += x
+            else:
+                res += n
+            diffBetweenVariants = abs(n - x)
+            leastContribute = min(leastContribute, diffBetweenVariants)
+        return res - (0 if cnt % 2 == 0 else leastContribute)
 
 
 sol = Solution()
