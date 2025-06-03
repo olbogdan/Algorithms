@@ -54,29 +54,38 @@ class Solution:
         processedBoxes = set()
         totalCandies = 0
 
-        for box in initialBoxes:
-            if status[box] == 1:
+        def tryOpenBox(box):
+            if box in processedBoxes:
+                return False
+            if box in availableBoxes and (status[box] == 1 or box in ownedKeys):
                 queue.append(box)
+                return True
+            return False
+
+        for box in initialBoxes:
+            tryOpenBox(box)
 
         while queue:
             currentBox = queue.popleft()
+
             if currentBox in processedBoxes:
                 continue
+
             processedBoxes.add(currentBox)
             totalCandies += candies[currentBox]
 
-            # Collect keys from current box
+            # Collect keys and immediately try boxes they can open
             for key in keys[currentBox]:
-                ownedKeys.add(key)
+                if key not in ownedKeys:
+                    ownedKeys.add(key)
+                    tryOpenBox(key)
 
-            # Collect contained boxes
+            # Collect contained boxes and try to open them
             for box in containedBoxes[currentBox]:
-                availableBoxes.add(box)
+                if box not in availableBoxes:
+                    availableBoxes.add(box)
+                    tryOpenBox(box)
 
-            # Check all available boxes to see if any can now be opened
-            for box in availableBoxes:
-                if box not in processedBoxes and (status[box] == 1 or box in ownedKeys):
-                    queue.append(box)
         return totalCandies
 
 
