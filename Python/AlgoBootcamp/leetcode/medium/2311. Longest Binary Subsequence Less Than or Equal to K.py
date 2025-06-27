@@ -41,16 +41,13 @@ class Solution:
             if bit == '0':
                 count += 1
             else:
-                if power <= k and value + power <= k:
+                if value + power <= k:
                     value += power
                     count += 1
                 else:
                     pass
-            power <<= 1
-            if power > k:
-                break
+            power = power * 2
 
-        count += s[:len(s) - count].count('0')
         return count
 
 
