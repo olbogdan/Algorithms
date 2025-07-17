@@ -44,3 +44,8 @@ class Solution:
                 ans = max(ans, dp[r][c])
 
         return ans
+
+
+sol = Solution()
+assert sol.maximumLength([1, 2, 3, 4, 5], 2) == 5
+assert sol.maximumLength([1, 4, 2, 3, 1, 4], 3) == 4
