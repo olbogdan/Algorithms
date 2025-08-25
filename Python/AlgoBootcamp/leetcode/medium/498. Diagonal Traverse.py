@@ -36,14 +36,14 @@ class Solution:
             diagonal = []
 
             # Starting point of this diagonal
-            r = 0 if d < COL else d - COL + 1
-            c = d if d < COL else COL - 1
+            row = 0 if d < COL else d - COL + 1
+            col = d if d < COL else COL - 1
 
             # Walk down-left until out of bounds
-            while r < ROW and c >= 0:
-                diagonal.append(mat[r][c])
-                r += 1
-                c -= 1
+            while row < ROW and col >= 0:
+                diagonal.append(mat[row][col])
+                row += 1
+                col -= 1
 
             # Reverse every second diagonal (to get zig-zag order)
             if d % 2 == 0:
@@ -56,5 +56,5 @@ class Solution:
 
 
 sol = Solution()
-assert sol.findDiagonalOrder([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [1,2,4,7,5,3,6,8,9]
 assert sol.findDiagonalOrder([[1, 2], [3, 4]]) == [1,2,3,4]
+assert sol.findDiagonalOrder([[1]]) == [1]
