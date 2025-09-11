@@ -28,42 +28,19 @@
 
 class Solution:
     def sortVowels(self, s: str) -> str:
-        bucket = [0] * 10
-        # A E I O U and small
-        A, E, I, O, U, a, e, i, o, u = "A", "E", "I", "O", "U", "a", "e", "i", "o", "u"
-        for char in s:
-            if char == A:
-                bucket[0] += 1
-            elif char == E:
-                bucket[1] += 1
-            elif char == I:
-                bucket[2] += 1
-            elif char == O:
-                bucket[3] += 1
-            elif char == U:
-                bucket[4] += 1
-            elif char == a:
-                bucket[5] += 1
-            elif char == e:
-                bucket[6] += 1
-            elif char == i:
-                bucket[7] += 1
-            elif char == o:
-                bucket[8] += 1
-            elif char == u:
-                bucket[9] += 1
-        resultArr = []
-        bucketI = 0
-        vowels = [A, E, I, O, U, a, e, i, o, u]
-        for ch in s:
-            while bucketI < len(bucket) and bucket[bucketI] == 0:
-                bucketI += 1
-            if ch in vowels:
-                bucket[bucketI] -= 1
-                resultArr.append(vowels[bucketI])
+        vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', "I", "O", "U"]
+        stor = []
+        for cha in s:
+            if cha in vowels:
+                stor.append(cha)
+        stor.sort(reverse = True)
+        res = []
+        for cha in s:
+            if cha in vowels:
+                res.append(stor.pop())
             else:
-                resultArr.append(ch)
-        return "".join(resultArr)
+                res.append(cha)
+        return "".join(res)
 
 
 sol = Solution()
