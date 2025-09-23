@@ -39,11 +39,13 @@
 class Solution:
     def compareVersion(self, version1: str, version2: str) -> int:
         v1 = version1.split(".")
+        v1.reverse()
         v2 = version2.split(".")
+        v2.reverse()
 
         while v1 or v2:
-            candidate1 = int(v1.pop(0)) if v1 else 0
-            candidate2 = int(v2.pop(0)) if v2 else 0
+            candidate1 = int(v1.pop()) if v1 else 0
+            candidate2 = int(v2.pop()) if v2 else 0
 
             if candidate1 < candidate2:
                 return -1
