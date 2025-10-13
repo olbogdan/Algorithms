@@ -44,7 +44,7 @@ class Solution:
             wArr.append((w, sorted(w)))
         res = []
         lastW = ""
-        for i in range(0, len(wArr)):
+        for i in range(len(wArr)):
             if len(res) == 0 or wArr[i][1] != lastW:
                 lastW = wArr[i][1]
                 res.append(wArr[i][0])
