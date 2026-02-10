@@ -23,28 +23,27 @@ class TreeNode:
         self.left = left
         self.right = right
 
-def isBalanced(root: Optional[TreeNode]) -> bool:
-   result = True
-   def dfs(node):
-       if not node:
-           return 0
-       nonlocal result
-       left = dfs(node.left)
-       right = dfs(node.right)
-       if left > right and left - right > 1:
-           result = False
-       elif left < right and right - left > 1:
-           result = False
-       return max(left, right) + 1
-   dfs(root)
-   return result
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        balanced = True
+        def dfs(node) -> int:
+            nonlocal balanced
+            if node is None or not balanced:
+                return 0
+            left = dfs(node.left) + 1
+            right = dfs(node.right) + 1
+            if abs(right - left) > 1:
+                balanced = False
+            return max(left, right)
+        dfs(root)
+        return balanced
 
 
 node = TreeNode(10, TreeNode(2), TreeNode(2, TreeNode(3, TreeNode(4), TreeNode(4)), TreeNode(3)))
-assert isBalanced(node) == False
+assert Solution().isBalanced(node) == False
 
 node = TreeNode(1, TreeNode(2), TreeNode(2, TreeNode(3)))
-assert isBalanced(node) == True
+assert Solution().isBalanced(node) == True
 
 
 def isBalanced2(root: Optional[TreeNode]) -> bool:
