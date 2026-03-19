@@ -31,18 +31,15 @@
 
 class Solution:
     def minOperations(self, s: str) -> int:
-        countZeros = 0
-        countOnes = 0
-        bin1 = '0'  # related to countZeros
-        bin2 = '1'  # related to countOnes
-        for i in range(len(s)):
-            if s[i] != bin1:
-                countZeros += 1
+        res1 = 0
+        res2 = 0
+
+        for i, ch in enumerate(s):
+            if int(ch) != i % 2:
+                res1 += 1
             else:
-                countOnes += 1
+                res2 += 1
 
-            bin1, bin2 = bin2, bin1
-        return min(countZeros, countOnes)
-
+        return min(res1, res2)
 
 assert Solution().minOperations("0100") == 1
