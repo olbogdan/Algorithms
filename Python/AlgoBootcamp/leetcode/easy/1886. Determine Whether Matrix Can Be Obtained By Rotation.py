@@ -41,11 +41,11 @@ class Solution:
         return res
 
     def findRotation(self, mat: List[List[int]], target: List[List[int]]) -> bool:
-        tempMat = mat
+        temp = mat
         for _ in range(4):
-            if tempMat == target:
+            if temp == target:
                 return True
-            tempMat = self.rotate(tempMat)
+            temp = self.rotate(temp)
         return False
 
 
