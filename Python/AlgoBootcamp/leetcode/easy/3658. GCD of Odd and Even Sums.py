@@ -36,7 +36,7 @@
 #
 # Constraints:
 #
-# 1 <= n <= 10​​​​​​​00
+# 1 <= n <= 1000
 
 class Solution:
     def gcdOfOddEvenSums(self, n: int) -> int:
