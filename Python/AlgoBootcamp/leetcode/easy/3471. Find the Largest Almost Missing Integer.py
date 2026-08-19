@@ -54,6 +54,7 @@
 # 1 <= nums.length <= 50
 # 0 <= nums[i] <= 50
 # 1 <= k <= nums.length
+from typing import List, Counter
 
 
 class Solution:
